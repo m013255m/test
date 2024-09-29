@@ -21,21 +21,27 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: rgba(255, 255, 255, 0);
-            padding: 10px 20px;
+            background-color: rgba(255, 255, 255, 0); /* شفاف تمامًا */
+            padding: 15px 20px;
             position: sticky;
             top: 0;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, padding 0.3s;
             z-index: 1000;
         }
         .top-bar.scrolled {
-            background-color: rgba(255, 255, 255, 1);
+            background-color: rgba(255, 255, 255, 0.9); /* شفافية خفيفة عند التمرير */
+            padding: 10px 20px; /* تقليل padding عند التمرير */
         }
         .top-bar a {
             color: #333;
             text-decoration: none;
-            margin: 0 10px;
+            margin: 0 15px;
             font-weight: bold;
+            font-size: 1.2em; /* حجم مناسب */
+            transition: transform 0.3s;
+        }
+        .top-bar a:hover {
+            transform: scale(1.1); /* تأثير عند التمرير فوق الرابط */
         }
         header {
             background-image: url('https://j.top4top.io/p_3192tnq6y1.jpeg');
@@ -67,9 +73,11 @@
             cursor: pointer;
             display: inline-block;
             margin-top: 20px;
+            transition: background-color 0.3s, transform 0.3s;
         }
         .cta-button:hover {
             background-color: #e6b800;
+            transform: scale(1.05); /* تأثير عند التمرير فوق الزر */
         }
         .services, .testimonials, .faq {
             display: flex;
@@ -77,14 +85,20 @@
             align-items: center;
             margin: 20px;
         }
-        .service-card, .testimonial-card, .faq-card {
+        .service-card {
             background-color: #4b3a3a;
             color: white;
             margin: 15px;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            width: 300px;
+            width: 90%; /* عرض مناسب للهواتف */
+            max-width: 400px; /* أقصى عرض */
+            transition: transform 0.3s, background-color 0.3s;
+        }
+        .service-card:hover {
+            transform: scale(1.05); /* تأثير عند التمرير فوق البطاقة */
+            background-color: #5d4c4c;
         }
         footer {
             background-color: #2c2121;
@@ -105,6 +119,10 @@
             width: 60px;
             height: 60px;
             z-index: 1000;
+            transition: transform 0.3s;
+        }
+        .whatsapp-icon:hover {
+            transform: scale(1.1); /* تأثير عند التمرير فوق أيقونة الواتساب */
         }
         .whatsapp-icon img {
             width: 100%;
@@ -186,7 +204,8 @@
 
     <section class="map-section">
         <h2>موقعنا</h2>
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3359.160843129148!2d50.1270023154487!3d26.258135783068178!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e49ef3378defbe9%3A0x1a4649c840c66a07!2z2K3Yp9mE2LTYp9mE2KfZhdmF2YjYp9mG2KfZhNmE!5e0!3m2!1sar!2seg!4v1638859719182!5m2!1sar!2seg" allowfullscreen="" loading="lazy"></iframe>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3359.160843129148!2d50.1270023154487!3d26.258135783068178!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e49ef3378defbe9%3A0x1a4649c840c66a07!2z2K3Yp9mE2LTYp9mE2KfZhdmF2YjYp9mG2KfZhNmE!5e0!3m2!1sar!2seg!4v1638859719182!5m2!1sar!2seg" 
+                width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
     </section>
 
     <section style="text-align: center; margin: 40px;">
