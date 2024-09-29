@@ -52,6 +52,7 @@
             padding: 100px 20px;
             text-align: center;
             color: white;
+            position: relative;
         }
         header h1 {
             margin: 0;
@@ -64,6 +65,9 @@
         }
         .logo {
             height: 80px;
+            position: absolute;
+            top: 20px;
+            left: 20px;
         }
         .cta-button {
             background-color: #ffcc00;
@@ -87,7 +91,7 @@
             align-items: center;
             margin: 20px;
         }
-        .service-card {
+        .service-card, .faq-card {
             background-color: #4b3a3a;
             color: white;
             margin: 15px;
@@ -100,11 +104,11 @@
             opacity: 0; /* إخفاء المربعات في البداية */
             transform: translateY(20px); /* لتحريك المربعات */
         }
-        .service-card.visible {
+        .service-card.visible, .faq-card.visible {
             opacity: 1; /* إظهار المربعات */
             transform: translateY(0); /* إعادة تعيين التحرك */
         }
-        .service-card:hover {
+        .service-card:hover, .faq-card:hover {
             transform: scale(1.05);
             background-color: #5d4c4c;
         }
@@ -190,22 +194,43 @@
     <section>
         <h2 style="text-align: center;">شهادات العملاء</h2>
         <div class="testimonials">
-            <div class="testimonial-card">
+            <div class="service-card" id="testimonial-1">
                 <p>"خدمتهم ممتازة، ساعدوني في قضية معقدة جداً."</p>
                 <p>- عميل سعيد</p>
             </div>
-            <div class="testimonial-card">
+            <div class="service-card" id="testimonial-2">
                 <p>"أفادوني بنصائح قانونية قيمة."</p>
                 <p>- عميل راضٍ</p>
             </div>
         </div>
     </section>
 
-    <section class="map-section">
-        <h2>موقعنا</h2>
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3359.160843129148!2d50.1270023154487!3d26.258135783068178!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e49ef3378defbe9%3A0x1a4649c840c66a07!2z2K3Yp9mE2LTYp9mE2KfZhdmF2YjYp9mG2KfZhNmE!5e0!3m2!1sar!2seg!4v1638859719182!5m2!1sar!2seg" 
-                width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+    <section>
+        <h2 style="text-align: center;">الأسئلة الشائعة</h2>
+        <div class="faq">
+            <div class="faq-card" id="faq-1">
+                <h4>ما هي تكاليف الاستشارة القانونية؟</h4>
+                <p>تعتمد التكاليف على نوع الخدمة.</p>
+            </div>
+            <div class="faq-card" id="faq-2">
+                <h4>كيف يمكنني التواصل معكم؟</h4>
+                <p>يمكنك التواصل عبر الهاتف.</p>
+            </div>
+            <div class="faq-card" id="faq-3">
+                <h4>ما هي مواعيد العمل؟</h4>
+                <p>نحن متاحون من الأحد إلى الخميس.</p>
+            </div>
+            <div class="faq-card" id="faq-4">
+                <h4>هل توفرون استشارات مجانية؟</h4>
+                <p>نعم، نقدم استشارة مجانية للعميل الأول.</p>
+            </div>
+        </div>
     </section>
+
+    <div class="map-section">
+        <h2>موقعنا</h2>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3359.160843129148!2d50.1270023154487!3d26.258135783068178!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e49ef3378defbe9%3A0x1a4649c840c66a07!2z2K3Yp9mE2LTYp9mE2KfZhdmF2YjYp9mG2KfZhNmE!5e0!3m2!1sar!2seg!4v1638859719182!5m2!1sar!2seg" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+    </div>
 
     <section style="text-align: center; margin: 40px;">
         <h2>معلومات الاتصال</h2>
@@ -228,7 +253,7 @@
     <script>
         window.onscroll = function() {
             const topBar = document.getElementById('top-bar');
-            const services = document.querySelectorAll('.service-card');
+            const services = document.querySelectorAll('.service-card, .faq-card');
             if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
                 topBar.classList.add('visible');
                 services.forEach((service, index) => {
