@@ -21,27 +21,29 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: rgba(255, 255, 255, 0); /* شفاف تمامًا */
-            padding: 15px 20px;
-            position: sticky;
+            background-color: rgba(255, 255, 255, 0.9); /* لون خلفية الشريط */
+            padding: 10px 20px;
+            position: fixed;
             top: 0;
-            transition: background-color 0.3s, padding 0.3s;
+            left: 0;
+            right: 0;
+            transition: transform 0.3s;
+            transform: translateY(-100%); /* إخفاء الشريط في البداية */
             z-index: 1000;
         }
-        .top-bar.scrolled {
-            background-color: rgba(255, 255, 255, 0.9); /* شفافية خفيفة عند التمرير */
-            padding: 10px 20px; /* تقليل padding عند التمرير */
+        .top-bar.visible {
+            transform: translateY(0); /* إظهار الشريط عند التمرير */
         }
         .top-bar a {
             color: #333;
             text-decoration: none;
             margin: 0 15px;
             font-weight: bold;
-            font-size: 1.2em; /* حجم مناسب */
+            font-size: 1.2em;
             transition: transform 0.3s;
         }
         .top-bar a:hover {
-            transform: scale(1.1); /* تأثير عند التمرير فوق الرابط */
+            transform: scale(1.1);
         }
         header {
             background-image: url('https://j.top4top.io/p_3192tnq6y1.jpeg');
@@ -61,7 +63,7 @@
             text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
         }
         .logo {
-            height: 80px; /* حجم الشعار المطلوب */
+            height: 80px;
         }
         .cta-button {
             background-color: #ffcc00;
@@ -77,7 +79,7 @@
         }
         .cta-button:hover {
             background-color: #e6b800;
-            transform: scale(1.05); /* تأثير عند التمرير فوق الزر */
+            transform: scale(1.05);
         }
         .services, .testimonials, .faq {
             display: flex;
@@ -95,9 +97,15 @@
             width: 90%; /* عرض مناسب للهواتف */
             max-width: 400px; /* أقصى عرض */
             transition: transform 0.3s, background-color 0.3s;
+            opacity: 0; /* إخفاء المربعات في البداية */
+            transform: translateY(20px); /* لتحريك المربعات */
+        }
+        .service-card.visible {
+            opacity: 1; /* إظهار المربعات */
+            transform: translateY(0); /* إعادة تعيين التحرك */
         }
         .service-card:hover {
-            transform: scale(1.05); /* تأثير عند التمرير فوق البطاقة */
+            transform: scale(1.05);
             background-color: #5d4c4c;
         }
         footer {
@@ -122,11 +130,16 @@
             transition: transform 0.3s;
         }
         .whatsapp-icon:hover {
-            transform: scale(1.1); /* تأثير عند التمرير فوق أيقونة الواتساب */
+            transform: scale(1.1);
         }
         .whatsapp-icon img {
             width: 100%;
             height: auto;
+        }
+        .map-section {
+            display: flex;
+            justify-content: center; /* لتوسيط الخريطة */
+            margin: 40px 0;
         }
     </style>
 </head>
@@ -151,23 +164,23 @@
     <section>
         <h2 style="text-align: center;">خدماتنا</h2>
         <div class="services">
-            <div class="service-card">
+            <div class="service-card" id="service-1">
                 <h3>قضايا تجارية</h3>
                 <p>نقدم خدمات قانونية متكاملة لحماية حقوقك في مجال الأعمال.</p>
             </div>
-            <div class="service-card">
+            <div class="service-card" id="service-2">
                 <h3>قضايا عمالية</h3>
                 <p>نسعى لتأمين حقوق العمال وأصحاب العمل.</p>
             </div>
-            <div class="service-card">
+            <div class="service-card" id="service-3">
                 <h3>قضايا جنائية</h3>
                 <p>ندافع عن حقوقك في المحاكم الجنائية.</p>
             </div>
-            <div class="service-card">
+            <div class="service-card" id="service-4">
                 <h3>استشارات قانونية</h3>
                 <p>نقدم استشارات قانونية متخصصة في مختلف المجالات.</p>
             </div>
-            <div class="service-card">
+            <div class="service-card" id="service-5">
                 <h3>الترافع في المحاكم</h3>
                 <p>تمثيل موكلينا أمام المحاكم بكفاءة واحترافية.</p>
             </div>
@@ -184,20 +197,6 @@
             <div class="testimonial-card">
                 <p>"أفادوني بنصائح قانونية قيمة."</p>
                 <p>- عميل راضٍ</p>
-            </div>
-        </div>
-    </section>
-
-    <section>
-        <h2 style="text-align: center;">الأسئلة الشائعة</h2>
-        <div class="faq">
-            <div class="faq-card">
-                <h4>ما هي تكاليف الاستشارة القانونية؟</h4>
-                <p>تعتمد التكاليف على نوع الخدمة.</p>
-            </div>
-            <div class="faq-card">
-                <h4>كيف يمكنني التواصل معكم؟</h4>
-                <p>يمكنك التواصل عبر الهاتف.</p>
             </div>
         </div>
     </section>
@@ -229,10 +228,16 @@
     <script>
         window.onscroll = function() {
             const topBar = document.getElementById('top-bar');
+            const services = document.querySelectorAll('.service-card');
             if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
-                topBar.classList.add('scrolled');
+                topBar.classList.add('visible');
+                services.forEach((service, index) => {
+                    setTimeout(() => {
+                        service.classList.add('visible');
+                    }, index * 200); // تأخير بسيط لكل مربع
+                });
             } else {
-                topBar.classList.remove('scrolled');
+                topBar.classList.remove('visible');
             }
         };
     </script>
