@@ -21,11 +21,15 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: rgba(255, 255, 255, 0.9);
+            background-color: rgba(255, 255, 255, 0);
             padding: 10px 20px;
             position: sticky;
             top: 0;
+            transition: background-color 0.3s;
             z-index: 1000;
+        }
+        .top-bar.scrolled {
+            background-color: rgba(255, 255, 255, 1);
         }
         .top-bar a {
             color: #333;
@@ -49,6 +53,9 @@
         header p {
             font-size: 1.2em;
             text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+        }
+        .logo {
+            height: 80px; /* حجم الشعار المطلوب */
         }
         .cta-button {
             background-color: #ffcc00;
@@ -106,14 +113,14 @@
     </style>
 </head>
 <body>
-    <div class="top-bar">
+    <div class="top-bar" id="top-bar">
         <div>
             <a href="#">الخدمات</a>
             <a href="#">فروعنا</a>
             <a href="#">أرقام التواصل</a>
         </div>
         <div>
-            <img src="https://c.top4top.io/p_3194cxatr1.jpeg" alt="شعار الموقع" style="height: 50px;">
+            <img src="https://c.top4top.io/p_3194cxatr1.png" alt="شعار المحامي" class="logo">
         </div>
     </div>
     
@@ -199,5 +206,16 @@
     <footer>
         <p>© 2024 المحامي عمر سامي الشامي | جميع الحقوق محفوظة</p>
     </footer>
+
+    <script>
+        window.onscroll = function() {
+            const topBar = document.getElementById('top-bar');
+            if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+                topBar.classList.add('scrolled');
+            } else {
+                topBar.classList.remove('scrolled');
+            }
+        };
+    </script>
 </body>
 </html>
