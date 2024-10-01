@@ -3,110 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>توليد VLESS</title>
+    <title>توليد أكواد VLESS من بلجيكا</title>
     <style>
         body {
-            margin: 0;
-            padding: 0;
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
-            animation: fadeIn 1.5s ease-in-out;
-        }
-        @keyframes fadeIn {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
-        }
-        .container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .content {
-            background-color: rgba(0, 0, 0, 0.7);
-            padding: 40px;
-            border-radius: 10px;
             text-align: center;
-            color: #fff;
-            max-width: 600px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-            transform: translateY(-50px);
-            animation: slideDown 1s forwards;
-        }
-        @keyframes slideDown {
-            to { transform: translateY(0); }
-        }
-        input {
-            padding: 10px;
-            margin: 10px 0;
-            width: 80%;
-            font-size: 18px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
+            padding: 50px;
         }
         .btn {
-            padding: 15px 30px;
+            padding: 10px 15px;
             background-color: #28a745;
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 18px;
+            font-size: 16px;
         }
         .btn:hover {
             background-color: #218838;
         }
+        .loading {
+            display: none; /* إخفاء رمز التحميل */
+            margin-top: 20px;
+        }
         .result {
             margin-top: 20px;
-            background-color: #333;
-            padding: 20px;
-            border-radius: 5px;
-            word-wrap: break-word;
-        }
-        .loading {
-            display: none;
-            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div class="content">
-            <h1>توليد VLESS</h1>
-            <form id="vlessForm">
-                <input type="text" id="username" placeholder="ادخل اليوزر" required><br>
-                <input type="text" id="host" placeholder="ادخل الهوست" required><br>
-                <button type="submit" class="btn">توليد الرابط</button>
-            </form>
-            <div class="loading" id="loading">
-                <img src="https://i.gifer.com/ZZ5H.gif" alt="تحميل..." width="50">
-            </div>
-            <div id="result" class="result"></div>
-        </div>
+    <h1>توليد أكواد VLESS من بلجيكا</h1>
+    <form id="vlessForm">
+        <input type="text" id="username" placeholder="ادخل اليوزر الخاص بك" required>
+        <input type="text" id="host" placeholder="ادخل الهوست الخاص بك" required>
+        <button type="submit" class="btn">توليد الكود</button>
+    </form>
+    <div class="loading" id="loading">
+        <img src="https://i.gifer.com/ZZ5H.gif" alt="تحميل..." width="50">
     </div>
+    <div id="result" class="result"></div>
 
     <script>
-        document.getElementById('vlessForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            
-            // إظهار أيقونة التحميل
+        const maxCodes = 200; // العدد الأقصى للأكواد المتاحة
+        let availableCodes = maxCodes; // عدد الأكواد المتاحة
+        let canGenerate = true; // للتحقق مما إذا كان بإمكان المستخدم إنشاء كود
+
+        document.getElementById('vlessForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (availableCodes <= 0) {
+                alert("انتهت الأكواد المتاحة.");
+                return;
+            }
+
+            if (!canGenerate) {
+                alert("يمكنك إنشاء كود جديد بعد 10 دقائق.");
+                return;
+            }
+
+            canGenerate = false; // منع المستخدم من إنشاء كود جديد
             document.getElementById('loading').style.display = 'block';
-            
-            // الحصول على اليوزر والهوست المدخلين
-            var username = document.getElementById('username').value;
-            var host = document.getElementById('host').value;
 
-            // توليد الرابط بعد 5 ثواني
-            setTimeout(function() {
-                // الكود الأساسي مع استبدال الهوست واليوزر
-                var vlessLink = `vless://I_Love_🇵🇸_SSHMax_0ecc44b@${host}:443?encryption=none&security=tls&sni=sshmax.net&type=grpc&serviceName=vless-grpc&mode=gun#${username}-gRPC`;
+            // محاكاة وقت التحميل
+            setTimeout(() => {
+                const username = document.getElementById('username').value;
+                const host = document.getElementById('host').value;
+                const code = `vless://I_Love_🇧🇪_${username}@${host}:443?encryption=none&security=tls&sni=sshmax.net&type=grpc&serviceName=vless-grpc&mode=gun#${username}-gRPC`;
+                
+                document.getElementById('result').innerText = code;
+                availableCodes--;
+                document.getElementById('belgiumCount').innerText = availableCodes; // تحديث العدّاد
 
-                // إخفاء أيقونة التحميل وعرض الرابط الناتج
                 document.getElementById('loading').style.display = 'none';
-                document.getElementById('result').innerHTML = vlessLink;
-            }, 5000);
+                canGenerate = true; // إعادة السماح للمستخدم بإنشاء كود جديد
+
+                // إعادة تمكين إمكانية إنشاء الأكواد بعد 10 دقائق
+                setTimeout(() => {
+                    canGenerate = true;
+                }, 10 * 60 * 1000); // 10 دقائق
+            }, 2000); // وقت التحميل
         });
     </script>
 
