@@ -29,7 +29,29 @@
             align-items: center;
             justify-content: center;
             height: 100vh; /* جعل القسم يملأ الشاشة عمودياً */
+        }
+
+        .form-box {
+            background-color: #ccc; /* لون المربع */
+            border-radius: 10px;
             padding: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            width: 300px; /* عرض المربع */
+            animation: slideIn 0.5s;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
         }
 
         .btn {
@@ -41,6 +63,7 @@
             cursor: pointer;
             font-size: 16px;
             transition: background-color 0.3s, transform 0.3s;
+            width: 100%; /* جعل الزر بنفس عرض المربع */
         }
 
         .btn:hover {
@@ -83,16 +106,18 @@
 
     <div class="container">
         <h1>توليد أكواد VLESS من فرنسا</h1>
-        <form id="vlessForm">
-            <input type="text" id="username" placeholder="ادخل اليوزر الخاص بك" required>
-            <input type="text" id="host" placeholder="ادخل الهوست الخاص بك" required>
-            <button type="submit" class="btn">توليد الكود</button>
-        </form>
-        <div class="loading" id="loading">
-            <img src="https://i.gifer.com/ZZ5H.gif" alt="تحميل..." width="50">
+        <div class="form-box">
+            <form id="vlessForm">
+                <input type="text" id="username" placeholder="ادخل اليوزر الخاص بك" required>
+                <input type="text" id="host" placeholder="ادخل الهوست الخاص بك" required>
+                <button type="submit" class="btn">توليد الكود</button>
+            </form>
+            <div class="loading" id="loading">
+                <img src="https://i.gifer.com/ZZ5H.gif" alt="تحميل..." width="50">
+            </div>
+            <div id="result" class="result"></div>
+            <div class="alert" id="alert"></div>
         </div>
-        <div id="result" class="result"></div>
-        <div class="alert" id="alert"></div>
     </div>
 
     <script>
@@ -125,7 +150,7 @@
                 // إنشاء كود VLESS
                 const code = `vless://I_Love_🇫🇷_${username}@${host}:443?encryption=none&security=tls&sni=${host}&type=grpc&serviceName=vless-grpc&mode=gun#${username}-gRPC`;
                 
-                document.getElementById('result').innerText = code;
+                document.getElementById('result').innerText = "تم إنشاء الكود:\n" + code;
                 document.getElementById('result').classList.add('visible'); // إظهار النتيجة
                 availableCodes--; // تقليل عدد الأكواد المتاحة
                 document.getElementById('loading').style.display = 'none';
