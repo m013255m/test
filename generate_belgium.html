@@ -6,14 +6,23 @@
     <title>توليد أكواد VLESS من فرنسا</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             background-color: #f4f4f4;
             text-align: center;
             padding: 50px;
+            animation: fadeIn 0.5s;
         }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
         h1 {
             margin-bottom: 20px;
+            color: #333;
         }
+
         .btn {
             padding: 10px 15px;
             background-color: #28a745;
@@ -22,21 +31,42 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
+            transition: background-color 0.3s, transform 0.3s;
         }
+
         .btn:hover {
             background-color: #218838;
+            transform: scale(1.05);
         }
+
         .loading {
             display: none; /* إخفاء رمز التحميل */
             margin-top: 20px;
+            animation: pulse 1s infinite;
         }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
         .result {
             margin-top: 20px;
             font-size: 18px;
             font-weight: bold;
+            color: #333;
+            transition: opacity 0.5s;
+            opacity: 0;
         }
+
+        .result.visible {
+            opacity: 1;
+        }
+
         .alert {
             color: red;
+            margin-top: 10px;
         }
     </style>
 </head>
@@ -74,6 +104,7 @@
             canGenerate = false; // منع المستخدم من إنشاء كود جديد
             document.getElementById('loading').style.display = 'block';
             document.getElementById('alert').innerText = ''; // إخفاء أي تنبيهات سابقة
+            document.getElementById('result').classList.remove('visible'); // إخفاء النتيجة السابقة
 
             // محاكاة وقت التحميل
             setTimeout(() => {
@@ -84,6 +115,7 @@
                 const code = `vless://I_Love_🇫🇷_${username}@${host}:443?encryption=none&security=tls&sni=${host}&type=grpc&serviceName=vless-grpc&mode=gun#${username}-gRPC`;
                 
                 document.getElementById('result').innerText = code;
+                document.getElementById('result').classList.add('visible'); // إظهار النتيجة
                 availableCodes--; // تقليل عدد الأكواد المتاحة
                 document.getElementById('loading').style.display = 'none';
                 canGenerate = true; // إعادة السماح للمستخدم بإنشاء كود جديد
@@ -95,7 +127,7 @@
                 setTimeout(() => {
                     canGenerate = true;
                 }, 10 * 60 * 1000); // 10 دقائق
-            }, 2000); // وقت التحميل
+            }, 7000); // وقت التحميل 7 ثواني
         });
     </script>
 
