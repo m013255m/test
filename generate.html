@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>توليد VLESS</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .content {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 40px;
+            border-radius: 10px;
+            text-align: center;
+            color: #fff;
+            max-width: 600px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+        input {
+            padding: 10px;
+            margin: 10px 0;
+            width: 80%;
+            font-size: 18px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .btn {
+            padding: 15px 30px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        .btn:hover {
+            background-color: #218838;
+        }
+        .result {
+            margin-top: 20px;
+            background-color: #333;
+            padding: 20px;
+            border-radius: 5px;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="content">
+            <h1>توليد VLESS</h1>
+            <form id="vlessForm">
+                <input type="text" id="username" placeholder="ادخل اليوزر" required><br>
+                <input type="text" id="host" placeholder="ادخل الهوست" required><br>
+                <button type="submit" class="btn">توليد الرابط</button>
+            </form>
+            <div id="result" class="result"></div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('vlessForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            // الحصول على اليوزر والهوست المدخلين
+            var username = document.getElementById('username').value;
+            var host = document.getElementById('host').value;
+
+            // الكود الأساسي مع استبدال الهوست واليوزر
+            var vlessLink = `vless://I_Love_🇵🇸_SSHMax_0ecc44b@${host}:443?encryption=none&security=tls&sni=sshmax.net&type=grpc&serviceName=vless-grpc&mode=gun#${username}-gRPC`;
+
+            // عرض الرابط الناتج في الصفحة
+            document.getElementById('result').innerHTML = vlessLink;
+        });
+    </script>
+
+</body>
+</html>
