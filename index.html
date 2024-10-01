@@ -8,46 +8,65 @@
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
-            text-align: center;
-            padding: 50px;
+            margin: 0;
+            padding: 0;
         }
         .header {
             background-color: #003366; /* لون أزرق غامق */
             color: white;
             padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 40px;
+            width: 100%; /* عرض كامل */
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            animation: slideIn 2s ease-in-out; /* تأثير حركي */
         }
         .header h1 {
             font-size: 40px;
             margin: 0;
-            font-family: 'Arial', sans-serif;
+            font-family:  Arial , sans-serif;
         }
         .header p {
             font-size: 18px;
             margin-top: 10px;
         }
+
+        /* تأثير حركي */
+        @keyframes slideIn {
+            from {
+                transform: translateX(-100%);
+            }
+            to {
+                transform: translateX(0);
+            }
+        }
+
         h1 {
             margin-bottom: 20px;
+            padding-top: 50px;
         }
+
         .sections {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 20px; /* المسافة بين الأقسام */
+            gap: 20px;
+            padding: 20px;
         }
+
         .section {
             background-color: #fff;
             border: 1px solid #ccc;
             border-radius: 10px;
             padding: 20px;
-            width: 150px; /* عرض القسم */
+            width: 150px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s; /* تأثير الحركة */
+            transition: transform 0.2s;
         }
         .section:hover {
-            transform: scale(1.05); /* تكبير القسم عند التمرير */
+            transform: scale(1.05);
         }
+
         .btn {
             padding: 10px 15px;
             background-color: #28a745;
@@ -61,16 +80,17 @@
         .btn:hover {
             background-color: #218838;
         }
+
         .flag {
-            width: 100%; /* عرض العلم */
-            height: auto; /* الحفاظ على نسبة العرض إلى الارتفاع */
-            margin-bottom: 10px; /* مسافة بين العلم والنص */
+            width: 100%;
+            height: auto;
+            margin-bottom: 10px;
         }
     </style>
 </head>
 <body>
 
-    <!-- الواجهة العلوية -->
+    <!-- الواجهة العلوية بعرض الموقع مع تأثير حركي -->
     <div class="header">
         <h1>SSH NOX</h1>
         <p>Get Free SSH and VPN Account for 30 Days</p>
