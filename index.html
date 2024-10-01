@@ -3,69 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>صفحة هبوط</title>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>SSH Nox</title>
     <style>
-        body { font-family: Arial, sans-serif; }
-        .section { margin: 20px; }
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .content {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 40px;
+            border-radius: 10px;
+            text-align: center;
+            color: #fff;
+            max-width: 600px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+        h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+        .btn {
+            padding: 15px 30px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            text-decoration: none;
+        }
+        .btn:hover {
+            background-color: #218838;
+        }
     </style>
 </head>
 <body>
 
-<h1>صفحة هبوط</h1>
-
-<div>
-    <label for="host">الهوست:</label>
-    <input type="text" id="host">
-    <label for="user">المستخدم:</label>
-    <input type="text" id="user">
-    <button onclick="generateCode()">احصل على الكود</button>
-</div>
-
-<div id="result"></div>
-
-<div class="section" id="vlees">
-    <h2>vlees</h2>
-    <p>الكود 1</p>
-    <p>الكود 2</p>
-    <p>الكود 3</p>
-    <p>الكود 4</p>
-    <p>الكود 5</p>
-</div>
-
-<div class="section" id="vmess">
-    <h2>vmess</h2>
-    <p>الكود 1</p>
-    <p>الكود 2</p>
-    <p>الكود 3</p>
-    <p>الكود 4</p>
-    <p>الكود 5</p>
-</div>
-
-<div class="section" id="ssh">
-    <h2>ssh</h2>
-    <p>الكود 1</p>
-    <p>الكود 2</p>
-    <p>الكود 3</p>
-    <p>الكود 4</p>
-    <p>الكود 5</p>
-</div>
-
-<script>
-    function generateCode() {
-        const host = document.getElementById( host ).value;
-        const user = document.getElementById( user ).value;
-        const sections = [ vlees ,  vmess ,  ssh ];
-        const result = [];
-
-        sections.forEach(section => {
-            const codes = [...document.querySelectorAll(`#${section} p`)].map(p => p.textContent);
-            const randomCode = codes[Math.floor(Math.random() * codes.length)];
-            result.push(`${randomCode} - الهوست: ${host} - المستخدم: ${user}`);
-        });
-
-        document.getElementById( result ).innerHTML = result.join( <br> );
-    }
-</script>
+    <div class="container">
+        <div class="content">
+            <h1>SSH Nox</h1>
+            <p>خدمة VLESS آمنة وسريعة</p>
+            <a href="generate.html" class="btn">إنشاء</a>
+        </div>
+    </div>
 
 </body>
 </html>
