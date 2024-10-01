@@ -23,6 +23,15 @@
             color: #333;
         }
 
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh; /* جعل القسم يملأ الشاشة عمودياً */
+            padding: 20px;
+        }
+
         .btn {
             padding: 10px 15px;
             background-color: #28a745;
@@ -72,17 +81,19 @@
 </head>
 <body>
 
-    <h1>توليد أكواد VLESS من فرنسا</h1>
-    <form id="vlessForm">
-        <input type="text" id="username" placeholder="ادخل اليوزر الخاص بك" required>
-        <input type="text" id="host" placeholder="ادخل الهوست الخاص بك" required>
-        <button type="submit" class="btn">توليد الكود</button>
-    </form>
-    <div class="loading" id="loading">
-        <img src="https://i.gifer.com/ZZ5H.gif" alt="تحميل..." width="50">
+    <div class="container">
+        <h1>توليد أكواد VLESS من فرنسا</h1>
+        <form id="vlessForm">
+            <input type="text" id="username" placeholder="ادخل اليوزر الخاص بك" required>
+            <input type="text" id="host" placeholder="ادخل الهوست الخاص بك" required>
+            <button type="submit" class="btn">توليد الكود</button>
+        </form>
+        <div class="loading" id="loading">
+            <img src="https://i.gifer.com/ZZ5H.gif" alt="تحميل..." width="50">
+        </div>
+        <div id="result" class="result"></div>
+        <div class="alert" id="alert"></div>
     </div>
-    <div id="result" class="result"></div>
-    <div class="alert" id="alert"></div>
 
     <script>
         const maxCodes = 200; // العدد الأقصى للأكواد المتاحة
