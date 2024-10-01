@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>قسم فرنسا</title>
+    <title>قسم الأكواد</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -12,55 +11,87 @@
             text-align: center;
             padding: 50px;
         }
+        h1 {
+            margin-bottom: 20px;
+        }
+        .sections {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px; /* المسافة بين الأقسام */
+        }
+        .section {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 20px;
+            width: 150px; /* عرض القسم */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s; /* تأثير الحركة */
+        }
+        .section:hover {
+            transform: scale(1.05); /* تكبير القسم عند التمرير */
+        }
         .btn {
-            padding: 15px 30px;
-            background-color: #007bff;
+            padding: 10px 15px;
+            background-color: #28a745;
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 18px;
+            font-size: 16px;
+            margin-top: 10px;
         }
         .btn:hover {
-            background-color: #0056b3;
+            background-color: #218838;
         }
-        .info {
-            margin: 20px 0;
-            font-size: 24px;
+        .flag {
+            width: 100%; /* عرض العلم */
+            height: auto; /* الحفاظ على نسبة العرض إلى الارتفاع */
+            margin-bottom: 10px; /* مسافة بين العلم والنص */
         }
     </style>
 </head>
 <body>
 
-    <h1>قسم فرنسا</h1>
+    <h1>قسم الأكواد</h1>
     <div class="info">الأكواد المتبقية اليوم: <span id="codeCount">200</span></div>
-    <a href="generate.html" class="btn">إنشاء كود جديد</a> <!-- رابط لصفحة إنشاء الكود -->
+    
+    <div class="sections">
+        <div class="section">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/4/65/Flag_of_Belgium.svg" alt="Belgium Flag" class="flag">
+            <h2>BELGIUM</h2>
+            <a href="generate_belgium.html" class="btn">انتقل إلى توليد الكود</a>
+        </div>
+        <div class="section">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/0/1d/Flag_of_Austria.svg" alt="Austria Flag" class="flag">
+            <h2>AUSTRIA</h2>
+            <a href="generate_austria.html" class="btn">انتقل إلى توليد الكود</a>
+        </div>
+        <div class="section">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/9/9c/Flag_of_Denmark.svg" alt="Denmark Flag" class="flag">
+            <h2>DENMARK</h2>
+            <a href="generate_denmark.html" class="btn">انتقل إلى توليد الكود</a>
+        </div>
+        <div class="section">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/c/cf/Flag_of_Canada.svg" alt="Canada Flag" class="flag">
+            <h2>CANADA</h2>
+            <a href="generate_canada.html" class="btn">انتقل إلى توليد الكود</a>
+        </div>
+        <div class="section">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Flag_of_France.svg" alt="France Flag" class="flag">
+            <h2>FRANCE</h2>
+            <a href="generate_france.html" class="btn">انتقل إلى توليد الكود</a>
+        </div>
+        <div class="section">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b4/Flag_of_Germany.svg" alt="Germany Flag" class="flag">
+            <h2>GERMANY</h2>
+            <a href="generate_germany.html" class="btn">انتقل إلى توليد الكود</a>
+        </div>
+    </div>
 
     <script>
-        // تحديث عدد الأكواد المتبقية
-        function updateCodeCount(remaining) {
-            document.getElementById('codeCount').innerText = remaining;
-        }
-
-        // تحقق من الأكواد المتاحة
-        function checkDailyCodeLimit() {
-            let lastReset = localStorage.getItem('lastReset');
-            let currentTime = new Date().getTime();
-            const RESET_INTERVAL = 24 * 60 * 60 * 1000; // 24 ساعة بالمللي ثانية
-            const MAX_CODES_PER_DAY = 200;
-
-            if (!lastReset || (currentTime - lastReset > RESET_INTERVAL)) {
-                // إعادة ضبط الأكواد بعد مرور 24 ساعة
-                localStorage.setItem('remainingCodes', MAX_CODES_PER_DAY);
-                localStorage.setItem('lastReset', currentTime);
-            }
-
-            let remainingCodes = localStorage.getItem('remainingCodes') || MAX_CODES_PER_DAY;
-            updateCodeCount(remainingCodes);
-        }
-
-        checkDailyCodeLimit();
+        // هنا يمكنك إضافة أي كود لتحديث عدد الأكواد المتاحة إذا كنت ترغب بذلك.
     </script>
-
 </body>
 </html>
