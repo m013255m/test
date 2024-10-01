@@ -4,89 +4,62 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>SSH Nox</title>
+    <title>قسم فرنسا</title>
     <style>
         body {
-            margin: 0;
-            padding: 0;
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
-            animation: fadeIn 1.5s ease-in-out;
-        }
-        @keyframes fadeIn {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
-        }
-        .container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .content {
-            background-color: rgba(0, 0, 0, 0.7);
-            padding: 40px;
-            border-radius: 10px;
             text-align: center;
-            color: #fff;
-            max-width: 600px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-            transform: translateY(-50px);
-            animation: slideDown 1s forwards;
-        }
-        @keyframes slideDown {
-            to { transform: translateY(0); }
-        }
-        h1 {
-            font-size: 48px;
-            margin-bottom: 20px;
-        }
-        p {
-            font-size: 18px;
-            margin-bottom: 30px;
+            padding: 50px;
         }
         .btn {
             padding: 15px 30px;
-            background-color: #28a745;
+            background-color: #007bff;
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             font-size: 18px;
-            text-decoration: none;
         }
         .btn:hover {
-            background-color: #218838;
+            background-color: #0056b3;
         }
-        .loading {
-            display: none;
-            margin-top: 20px;
+        .info {
+            margin: 20px 0;
+            font-size: 24px;
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div class="content">
-            <h1>SSH Nox</h1>
-            <p>خدمة VLESS آمنة وسريعة</p>
-            <a href="javascript:void(0)" class="btn" onclick="showLoading()">إنشاء</a>
-            <div class="loading" id="loading">
-                <img src="https://i.gifer.com/ZZ5H.gif" alt="تحميل..." width="50">
-            </div>
-        </div>
-    </div>
+    <h1>قسم فرنسا</h1>
+    <div class="info">الأكواد المتبقية اليوم: <span id="codeCount">200</span></div>
+    <a href="generate.html" class="btn">إنشاء كود جديد</a> <!-- رابط لصفحة إنشاء الكود -->
 
     <script>
-        function showLoading() {
-            // إظهار أيقونة التحميل
-            document.getElementById('loading').style.display = 'block';
-            
-            // الانتقال إلى صفحة أخرى بعد 3 ثواني
-            setTimeout(function() {
-                window.location.href = 'generate.html';
-            }, 3000);
+        // تحديث عدد الأكواد المتبقية
+        function updateCodeCount(remaining) {
+            document.getElementById('codeCount').innerText = remaining;
         }
+
+        // تحقق من الأكواد المتاحة
+        function checkDailyCodeLimit() {
+            let lastReset = localStorage.getItem('lastReset');
+            let currentTime = new Date().getTime();
+            const RESET_INTERVAL = 24 * 60 * 60 * 1000; // 24 ساعة بالمللي ثانية
+            const MAX_CODES_PER_DAY = 200;
+
+            if (!lastReset || (currentTime - lastReset > RESET_INTERVAL)) {
+                // إعادة ضبط الأكواد بعد مرور 24 ساعة
+                localStorage.setItem('remainingCodes', MAX_CODES_PER_DAY);
+                localStorage.setItem('lastReset', currentTime);
+            }
+
+            let remainingCodes = localStorage.getItem('remainingCodes') || MAX_CODES_PER_DAY;
+            updateCodeCount(remainingCodes);
+        }
+
+        checkDailyCodeLimit();
     </script>
 
 </body>
