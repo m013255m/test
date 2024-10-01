@@ -11,6 +11,11 @@
             padding: 0;
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
         }
         .container {
             display: flex;
@@ -26,6 +31,11 @@
             color: #fff;
             max-width: 600px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            transform: translateY(-50px);
+            animation: slideDown 1s forwards;
+        }
+        @keyframes slideDown {
+            to { transform: translateY(0); }
         }
         input {
             padding: 10px;
@@ -54,6 +64,10 @@
             border-radius: 5px;
             word-wrap: break-word;
         }
+        .loading {
+            display: none;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -66,6 +80,9 @@
                 <input type="text" id="host" placeholder="ادخل الهوست" required><br>
                 <button type="submit" class="btn">توليد الرابط</button>
             </form>
+            <div class="loading" id="loading">
+                <img src="https://i.gifer.com/ZZ5H.gif" alt="تحميل..." width="50">
+            </div>
             <div id="result" class="result"></div>
         </div>
     </div>
@@ -74,15 +91,22 @@
         document.getElementById('vlessForm').addEventListener('submit', function(event) {
             event.preventDefault();
             
+            // إظهار أيقونة التحميل
+            document.getElementById('loading').style.display = 'block';
+            
             // الحصول على اليوزر والهوست المدخلين
             var username = document.getElementById('username').value;
             var host = document.getElementById('host').value;
 
-            // الكود الأساسي مع استبدال الهوست واليوزر
-            var vlessLink = `vless://I_Love_🇵🇸_SSHMax_0ecc44b@${host}:443?encryption=none&security=tls&sni=sshmax.net&type=grpc&serviceName=vless-grpc&mode=gun#${username}-gRPC`;
+            // توليد الرابط بعد 5 ثواني
+            setTimeout(function() {
+                // الكود الأساسي مع استبدال الهوست واليوزر
+                var vlessLink = `vless://I_Love_🇵🇸_SSHMax_0ecc44b@${host}:443?encryption=none&security=tls&sni=sshmax.net&type=grpc&serviceName=vless-grpc&mode=gun#${username}-gRPC`;
 
-            // عرض الرابط الناتج في الصفحة
-            document.getElementById('result').innerHTML = vlessLink;
+                // إخفاء أيقونة التحميل وعرض الرابط الناتج
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('result').innerHTML = vlessLink;
+            }, 5000);
         });
     </script>
 
