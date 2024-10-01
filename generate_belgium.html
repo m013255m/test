@@ -123,29 +123,32 @@
     <script>
         const maxCodes = 200; // العدد الأقصى للأكواد المتاحة
         let availableCodes = maxCodes; // عدد الأكواد المتاحة
-        let canGenerate = true; // للتحقق مما إذا كان بإمكان المستخدم إنشاء كود
 
         document.getElementById('vlessForm').addEventListener('submit', function(e) {
             e.preventDefault();
+            const lastGenerated = sessionStorage.getItem('lastGenerated');
+            const currentTime = new Date().getTime();
+
+            // تحقق مما إذا كان يمكن للزائر استخراج كود جديد
+            if (lastGenerated && (currentTime - lastGenerated < 10 * 60 * 1000)) { // 10 دقائق
+                const remainingTime = Math.ceil((10 * 60 * 1000 - (currentTime - lastGenerated)) / 1000);
+                alert(`يمكنك إنشاء كود جديد بعد ${remainingTime} ثانية.`);
+                return;
+            }
+
             if (availableCodes <= 0) {
                 alert("انتهت الأكواد المتاحة.");
                 return;
             }
 
-            if (!canGenerate) {
-                alert("يمكنك إنشاء كود جديد بعد 10 دقائق.");
-                return;
-            }
-
-            canGenerate = false; // منع المستخدم من إنشاء كود جديد
             document.getElementById('loading').style.display = 'block';
             document.getElementById('alert').innerText = ''; // إخفاء أي تنبيهات سابقة
             document.getElementById('result').classList.remove('visible'); // إخفاء النتيجة السابقة
 
             // محاكاة وقت التحميل
             setTimeout(() => {
-                const username = document.getElementById('username').value;
-                const host = document.getElementById('host').value;
+                const username = document.getElementById('username').value || generateRandomUsername();
+                const host = document.getElementById('host').value || generateRandomHost();
 
                 // إنشاء كود VLESS
                 const code = `vless://I_Love_🇫🇷_${username}@${host}:443?encryption=none&security=tls&sni=${host}&type=grpc&serviceName=vless-grpc&mode=gun#${username}-gRPC`;
@@ -153,18 +156,25 @@
                 document.getElementById('result').innerText = "تم إنشاء الكود:\n" + code;
                 document.getElementById('result').classList.add('visible'); // إظهار النتيجة
                 availableCodes--; // تقليل عدد الأكواد المتاحة
+                sessionStorage.setItem('lastGenerated', currentTime); // تخزين وقت إنشاء الكود
                 document.getElementById('loading').style.display = 'none';
-                canGenerate = true; // إعادة السماح للمستخدم بإنشاء كود جديد
 
                 // تحديث عدد الأكواد المتاحة
                 document.getElementById('alert').innerText = `الأكواد المتبقية: ${availableCodes}`;
-
-                // إعادة تمكين إمكانية إنشاء الأكواد بعد 10 دقائق
-                setTimeout(() => {
-                    canGenerate = true;
-                }, 10 * 60 * 1000); // 10 دقائق
             }, 7000); // وقت التحميل 7 ثواني
         });
+
+        // دالة لإنشاء اسم مستخدم عشوائي
+        function generateRandomUsername() {
+            const randomNum = Math.floor(Math.random() * 10000);
+            return `user${randomNum}`;
+        }
+
+        // دالة لإنشاء هوست عشوائي
+        function generateRandomHost() {
+            const hosts = ['example.com', 'test.com', 'myhost.com', 'yourhost.com', 'demo.com'];
+            return hosts[Math.floor(Math.random() * hosts.length)];
+        }
     </script>
 
 </body>
