@@ -32,11 +32,11 @@
         }
 
         .form-box {
-            background-color: #ccc; /* لون المربع */
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-            width: 300px; /* عرض المربع */
+            background-color: #1f1f1f; /* لون المربع الأسود الفاتح */
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+            width: 350px; /* حجم المربع الأكبر */
             animation: slideIn 0.5s;
         }
 
@@ -46,12 +46,19 @@
         }
 
         input {
-            width: 100%;
-            padding: 10px;
+            width: 90%; /* جعل حجم الحقول أصغر قليلاً */
+            padding: 8px;
             margin: 10px 0;
             border: 1px solid #ddd;
             border-radius: 5px;
-            font-size: 16px;
+            font-size: 14px;
+            transition: transform 0.2s, border-color 0.2s; /* تأثير التكبير */
+        }
+
+        input:focus {
+            transform: scale(1.05); /* تكبير الحقل عند التركيز */
+            border-color: #007bff; /* تغيير لون الإطار عند الكتابة */
+            outline: none;
         }
 
         .btn {
