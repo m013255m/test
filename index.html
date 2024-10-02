@@ -19,7 +19,7 @@
             text-align: center;
             position: relative;
             overflow: hidden;
-            animation: slideIn 2s ease-in-out; /* تأثير حركي */
+            animation: fadeIn 2s ease-in-out; /* تأثير حركي جديد */
         }
         .header h1 {
             font-size: 40px;
@@ -31,13 +31,13 @@
             margin-top: 10px;
         }
 
-        /* تأثير حركي */
-        @keyframes slideIn {
+        /* تأثير حركي جديد */
+        @keyframes fadeIn {
             from {
-                transform: translateX(-100%);
+                opacity: 0;
             }
             to {
-                transform: translateX(0);
+                opacity: 1;
             }
         }
 
@@ -97,7 +97,6 @@
     </div>
 
     <h1>قسم الأكواد</h1>
-    <div class="info">الأكواد المتبقية اليوم: <span id="codeCount">200</span></div>
     
     <div class="sections">
         <div class="section">
