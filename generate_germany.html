@@ -28,15 +28,15 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh; /* جعل القسم يملأ الشاشة عمودياً */
+            height: 100vh;
         }
 
         .form-box {
-            background-color: #1f1f1f; /* لون المربع الأسود الفاتح */
+            background-color: #1f1f1f;
             border-radius: 15px;
             padding: 30px;
             box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
-            width: 350px; /* حجم المربع الأكبر */
+            width: 350px;
             animation: slideIn 0.5s;
         }
 
@@ -46,18 +46,18 @@
         }
 
         input {
-            width: 90%; /* جعل حجم الحقول أصغر قليلاً */
+            width: 90%;
             padding: 8px;
             margin: 10px 0;
             border: 1px solid #ddd;
             border-radius: 5px;
             font-size: 14px;
-            transition: transform 0.2s, border-color 0.2s; /* تأثير التكبير */
+            transition: transform 0.2s, border-color 0.2s;
         }
 
         input:focus {
-            transform: scale(1.05); /* تكبير الحقل عند التركيز */
-            border-color: #007bff; /* تغيير لون الإطار عند الكتابة */
+            transform: scale(1.05);
+            border-color: #007bff;
             outline: none;
         }
 
@@ -70,7 +70,7 @@
             cursor: pointer;
             font-size: 16px;
             transition: background-color 0.3s, transform 0.3s;
-            width: 100%; /* جعل الزر بنفس عرض المربع */
+            width: 100%;
         }
 
         .btn:hover {
@@ -79,7 +79,7 @@
         }
 
         .loading {
-            display: none; /* إخفاء رمز التحميل */
+            display: none;
             margin-top: 20px;
             animation: pulse 1s infinite;
         }
@@ -97,6 +97,9 @@
             color: #333;
             transition: opacity 0.5s;
             opacity: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .result.visible {
@@ -106,6 +109,32 @@
         .alert {
             color: red;
             margin-top: 10px;
+        }
+
+        .copy-btn {
+            margin-top: 10px;
+            padding: 8px 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.3s;
+        }
+
+        .copy-btn:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        .copied {
+            animation: copiedAnimation 0.5s;
+        }
+
+        @keyframes copiedAnimation {
+            0% { transform: scale(1); background-color: #007bff; }
+            50% { transform: scale(1.1); background-color: #28a745; }
+            100% { transform: scale(1); background-color: #007bff; }
         }
     </style>
 </head>
@@ -128,16 +157,15 @@
     </div>
 
     <script>
-        const maxCodes = 200; // العدد الأقصى للأكواد المتاحة
-        let availableCodes = maxCodes; // عدد الأكواد المتاحة
+        const maxCodes = 200;
+        let availableCodes = maxCodes;
 
         document.getElementById('vlessForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const lastGenerated = sessionStorage.getItem('lastGenerated');
             const currentTime = new Date().getTime();
 
-            // تحقق مما إذا كان يمكن للزائر استخراج كود جديد
-            if (lastGenerated && (currentTime - lastGenerated < 10 * 60 * 1000)) { // 10 دقائق
+            if (lastGenerated && (currentTime - lastGenerated < 10 * 60 * 1000)) {
                 const remainingTime = Math.ceil((10 * 60 * 1000 - (currentTime - lastGenerated)) / 1000);
                 alert(`يمكنك إنشاء كود جديد بعد ${remainingTime} ثانية.`);
                 return;
@@ -149,38 +177,50 @@
             }
 
             document.getElementById('loading').style.display = 'block';
-            document.getElementById('alert').innerText = ''; // إخفاء أي تنبيهات سابقة
-            document.getElementById('result').classList.remove('visible'); // إخفاء النتيجة السابقة
+            document.getElementById('alert').innerText = '';
+            document.getElementById('result').classList.remove('visible');
 
-            // محاكاة وقت التحميل
             setTimeout(() => {
                 const username = document.getElementById('username').value || generateRandomUsername();
                 const host = document.getElementById('host').value || generateRandomHost();
 
-                // إنشاء كود VLESS
                 const code = `vless://I_Love_🇫🇷_${username}@${host}:443?encryption=none&security=tls&sni=${host}&type=grpc&serviceName=vless-grpc&mode=gun#${username}-gRPC`;
-                
-                document.getElementById('result').innerText = "تم إنشاء الكود:\n" + code;
-                document.getElementById('result').classList.add('visible'); // إظهار النتيجة
-                availableCodes--; // تقليل عدد الأكواد المتاحة
-                sessionStorage.setItem('lastGenerated', currentTime); // تخزين وقت إنشاء الكود
-                document.getElementById('loading').style.display = 'none';
 
-                // تحديث عدد الأكواد المتاحة
+                document.getElementById('result').innerHTML = `
+                    تم إنشاء الكود:
+                    <p id="codeText">${code}</p>
+                    <button class="copy-btn" onclick="copyCode()">نسخ الكود</button>
+                `;
+                document.getElementById('result').classList.add('visible');
+                availableCodes--;
+                sessionStorage.setItem('lastGenerated', currentTime);
+                document.getElementById('loading').style.display = 'none';
                 document.getElementById('alert').innerText = `الأكواد المتبقية: ${availableCodes}`;
-            }, 7000); // وقت التحميل 7 ثواني
+            }, 7000);
         });
 
-        // دالة لإنشاء اسم مستخدم عشوائي
         function generateRandomUsername() {
             const randomNum = Math.floor(Math.random() * 10000);
             return `user${randomNum}`;
         }
 
-        // دالة لإنشاء هوست عشوائي
         function generateRandomHost() {
             const hosts = ['example.com', 'test.com', 'myhost.com', 'yourhost.com', 'demo.com'];
             return hosts[Math.floor(Math.random() * hosts.length)];
+        }
+
+        function copyCode() {
+            const codeText = document.getElementById('codeText').innerText;
+            navigator.clipboard.writeText(codeText).then(() => {
+                const copyBtn = document.querySelector('.copy-btn');
+                copyBtn.classList.add('copied');
+                copyBtn.innerText = 'تم النسخ!';
+
+                setTimeout(() => {
+                    copyBtn.classList.remove('copied');
+                    copyBtn.innerText = 'نسخ الكود';
+                }, 2000);
+            });
         }
     </script>
 
