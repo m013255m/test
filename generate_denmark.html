@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>توليد أكواد VLESS من فرنسا</title>
+    <title>توليد أكواد VLESS من دنمارك</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -13,11 +13,6 @@
             animation: fadeIn 0.5s;
         }
         
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
         h1 {
             margin-bottom: 20px;
             color: #333;
@@ -28,37 +23,24 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh; /* جعل القسم يملأ الشاشة عمودياً */
+            height: 100vh;
         }
 
         .form-box {
-            background-color: #1f1f1f; /* لون المربع الأسود الفاتح */
+            background-color: #1f1f1f;
             border-radius: 15px;
             padding: 30px;
             box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
-            width: 350px; /* حجم المربع الأكبر */
-            animation: slideIn 0.5s;
-        }
-
-        @keyframes slideIn {
-            from { transform: translateY(-50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+            width: 350px;
         }
 
         input {
-            width: 90%; /* جعل حجم الحقول أصغر قليلاً */
+            width: 90%;
             padding: 8px;
             margin: 10px 0;
             border: 1px solid #ddd;
             border-radius: 5px;
             font-size: 14px;
-            transition: transform 0.2s, border-color 0.2s; /* تأثير التكبير */
-        }
-
-        input:focus {
-            transform: scale(1.05); /* تكبير الحقل عند التركيز */
-            border-color: #007bff; /* تغيير لون الإطار عند الكتابة */
-            outline: none;
         }
 
         .btn {
@@ -69,25 +51,7 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
-            transition: background-color 0.3s, transform 0.3s;
-            width: 100%; /* جعل الزر بنفس عرض المربع */
-        }
-
-        .btn:hover {
-            background-color: #218838;
-            transform: scale(1.05);
-        }
-
-        .loading {
-            display: none; /* إخفاء رمز التحميل */
-            margin-top: 20px;
-            animation: pulse 1s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
+            width: 100%;
         }
 
         .result {
@@ -95,17 +59,29 @@
             font-size: 18px;
             font-weight: bold;
             color: #333;
-            transition: opacity 0.5s;
-            opacity: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        .result.visible {
-            opacity: 1;
-        }
-
-        .alert {
-            color: red;
+        .copy-btn {
             margin-top: 10px;
+            padding: 8px 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .copied {
+            animation: copiedAnimation 0.5s;
+        }
+
+        @keyframes copiedAnimation {
+            0% { transform: scale(1); background-color: #007bff; }
+            50% { transform: scale(1.1); background-color: #28a745; }
+            100% { transform: scale(1); background-color: #007bff; }
         }
     </style>
 </head>
@@ -119,68 +95,55 @@
                 <input type="text" id="host" placeholder="ادخل الهوست الخاص بك" required>
                 <button type="submit" class="btn">توليد الكود</button>
             </form>
-            <div class="loading" id="loading">
-                <img src="https://i.gifer.com/ZZ5H.gif" alt="تحميل..." width="50">
-            </div>
             <div id="result" class="result"></div>
             <div class="alert" id="alert"></div>
         </div>
     </div>
 
     <script>
-        const maxCodes = 200; // العدد الأقصى للأكواد المتاحة
-        let availableCodes = maxCodes; // عدد الأكواد المتاحة
+        const maxCodes = 200;
+        let availableCodes = maxCodes;
 
         document.getElementById('vlessForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            const lastGenerated = sessionStorage.getItem('lastGenerated');
-            const currentTime = new Date().getTime();
+            
+            const username = document.getElementById('username').value || generateRandomUsername();
+            const host = document.getElementById('host').value || generateRandomHost();
+            const expirationDate = new Date();
+            expirationDate.setDate(expirationDate.getDate() + 7);  // صلاحية الكود 7 أيام
 
-            // تحقق مما إذا كان يمكن للزائر استخراج كود جديد
-            if (lastGenerated && (currentTime - lastGenerated < 10 * 60 * 1000)) { // 10 دقائق
-                const remainingTime = Math.ceil((10 * 60 * 1000 - (currentTime - lastGenerated)) / 1000);
-                alert(`يمكنك إنشاء كود جديد بعد ${remainingTime} ثانية.`);
-                return;
-            }
+            const code = `vless://I_Love_🇫🇷_${username}@${host}:443?encryption=none&security=tls&sni=${host}&type=grpc&serviceName=vless-grpc&mode=gun#${username}-gRPC`;
+            
+            document.getElementById('result').innerHTML = `
+                <button class="copy-btn" onclick="copyCode('${code}')">نسخ الكود</button>
+                <p>صلاحية الكود حتى: ${expirationDate.toDateString()}</p>
+            `;
 
-            if (availableCodes <= 0) {
-                alert("انتهت الأكواد المتاحة.");
-                return;
-            }
-
-            document.getElementById('loading').style.display = 'block';
-            document.getElementById('alert').innerText = ''; // إخفاء أي تنبيهات سابقة
-            document.getElementById('result').classList.remove('visible'); // إخفاء النتيجة السابقة
-
-            // محاكاة وقت التحميل
-            setTimeout(() => {
-                const username = document.getElementById('username').value || generateRandomUsername();
-                const host = document.getElementById('host').value || generateRandomHost();
-
-                // إنشاء كود VLESS
-                const code = `vless://I_Love_🇫🇷_${username}@${host}:443?encryption=none&security=tls&sni=${host}&type=grpc&serviceName=vless-grpc&mode=gun#${username}-gRPC`;
-                
-                document.getElementById('result').innerText = "تم إنشاء الكود:\n" + code;
-                document.getElementById('result').classList.add('visible'); // إظهار النتيجة
-                availableCodes--; // تقليل عدد الأكواد المتاحة
-                sessionStorage.setItem('lastGenerated', currentTime); // تخزين وقت إنشاء الكود
-                document.getElementById('loading').style.display = 'none';
-
-                // تحديث عدد الأكواد المتاحة
-                document.getElementById('alert').innerText = `الأكواد المتبقية: ${availableCodes}`;
-            }, 7000); // وقت التحميل 7 ثواني
+            availableCodes--;
+            document.getElementById('alert').innerText = `الأكواد المتبقية: ${availableCodes}`;
         });
 
-        // دالة لإنشاء اسم مستخدم عشوائي
         function generateRandomUsername() {
             const randomNum = Math.floor(Math.random() * 10000);
             return `user${randomNum}`;
         }
 
-        // دالة لإنشاء هوست عشوائي
         function generateRandomHost() {
             const hosts = ['example.com', 'test.com', 'myhost.com', 'yourhost.com', 'demo.com'];
             return hosts[Math.floor(Math.random() * hosts.length)];
+        }
+
+        function copyCode(code) {
+            navigator.clipboard.writeText(code).then(() => {
+                const copyBtn = document.querySelector('.copy-btn');
+                copyBtn.classList.add('copied');
+                copyBtn.innerText = 'تم النسخ!';
+
+                setTimeout(() => {
+                    copyBtn.classList.remove('copied');
+                    copyBtn.innerText = 'نسخ الكود';
+                }, 2000);
+            });
         }
     </script>
 
