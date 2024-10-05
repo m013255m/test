@@ -6,7 +6,7 @@
     <title>توليد أكواد VLESS من المانيا</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: Arial, sans-serif;
             background-color: #f4f4f4;
             text-align: center;
             padding: 50px;
@@ -72,16 +72,33 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            display: none;
         }
 
-        .copied {
-            animation: copiedAnimation 0.5s;
+        .loading {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #007bff;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 2s linear infinite;
+            display: none;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         @keyframes copiedAnimation {
             0% { transform: scale(1); background-color: #007bff; }
             50% { transform: scale(1.1); background-color: #28a745; }
             100% { transform: scale(1); background-color: #007bff; }
+        }
+
+        .alert {
+            color: red;
+            margin-top: 10px;
         }
     </style>
 </head>
@@ -95,6 +112,7 @@
                 <input type="text" id="host" placeholder="ادخل الهوست الخاص بك" required>
                 <button type="submit" class="btn">توليد الكود</button>
             </form>
+            <div class="loading" id="loading"></div>
             <div id="result" class="result"></div>
             <div class="alert" id="alert"></div>
         </div>
@@ -103,24 +121,43 @@
     <script>
         const maxCodes = 200;
         let availableCodes = maxCodes;
+        const cooldownTime = 5 * 60 * 1000; // 5 دقائق بالميلي ثانية
 
-        document.getElementById('vlessForm').addEventListener('submit', function(e) {
+        document.getElementById("vlessForm").addEventListener("submit", function(e) {
             e.preventDefault();
-            
-            const username = document.getElementById('username').value || generateRandomUsername();
-            const host = document.getElementById('host').value || generateRandomHost();
+
+            const lastGenerated = localStorage.getItem("lastGeneratedTime");
+            const now = new Date().getTime();
+
+            if (lastGenerated && now - lastGenerated < cooldownTime) {
+                const remainingTime = Math.ceil((cooldownTime - (now - lastGenerated)) / 1000);
+                document.getElementById("alert").innerText = `يجب الانتظار ${remainingTime} ثانية قبل استخراج كود آخر.`;
+                return;
+            }
+
+            localStorage.setItem("lastGeneratedTime", now);
+
+            const username = document.getElementById("username").value || generateRandomUsername();
+            const host = document.getElementById("host").value || generateRandomHost();
             const expirationDate = new Date();
             expirationDate.setDate(expirationDate.getDate() + 7);  // صلاحية الكود 7 أيام
 
             const code = `vless://I_Love_🇫🇷_${username}@${host}:443?encryption=none&security=tls&sni=${host}&type=grpc&serviceName=vless-grpc&mode=gun#${username}-gRPC`;
-            
-            document.getElementById('result').innerHTML = `
-                <button class="copy-btn" onclick="copyCode('${code}')">نسخ الكود</button>
-                <p>صلاحية الكود حتى: ${expirationDate.toDateString()}</p>
-            `;
+
+            document.getElementById("loading").style.display = "block"; // عرض الأيقونة
+            document.getElementById("result").innerHTML = ""; // إخفاء الزر
+
+            setTimeout(() => {
+                document.getElementById("loading").style.display = "none"; // إخفاء الأيقونة
+                document.getElementById("result").innerHTML = `
+                    <button class="copy-btn" onclick="copyCode('${code}')">نسخ الكود</button>
+                    <p>صلاحية الكود حتى: ${expirationDate.toDateString()}</p>
+                `;
+                document.querySelector(".copy-btn").style.display = "block"; // عرض زر النسخ
+            }, 7000);
 
             availableCodes--;
-            document.getElementById('alert').innerText = `الأكواد المتبقية: ${availableCodes}`;
+            document.getElementById("alert").innerText = `الأكواد المتبقية: ${availableCodes}`;
         });
 
         function generateRandomUsername() {
@@ -129,19 +166,19 @@
         }
 
         function generateRandomHost() {
-            const hosts = ['example.com', 'test.com', 'myhost.com', 'yourhost.com', 'demo.com'];
+            const hosts = ["example.com", "test.com", "myhost.com", "yourhost.com", "demo.com"];
             return hosts[Math.floor(Math.random() * hosts.length)];
         }
 
         function copyCode(code) {
             navigator.clipboard.writeText(code).then(() => {
-                const copyBtn = document.querySelector('.copy-btn');
-                copyBtn.classList.add('copied');
-                copyBtn.innerText = 'تم النسخ!';
+                const copyBtn = document.querySelector(".copy-btn");
+                copyBtn.classList.add("copied");
+                copyBtn.innerText = "تم النسخ!";
 
                 setTimeout(() => {
-                    copyBtn.classList.remove('copied');
-                    copyBtn.innerText = 'نسخ الكود';
+                    copyBtn.classList.remove("copied");
+                    copyBtn.innerText = "نسخ الكود";
                 }, 2000);
             });
         }
