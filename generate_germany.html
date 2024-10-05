@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>توليد أكواد VLESS من فرنسا</title>
+    <title>توليد أكواد VLESS من المانيا</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -13,11 +13,6 @@
             animation: fadeIn 0.5s;
         }
         
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
         h1 {
             margin-bottom: 20px;
             color: #333;
@@ -37,12 +32,6 @@
             padding: 30px;
             box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
             width: 350px;
-            animation: slideIn 0.5s;
-        }
-
-        @keyframes slideIn {
-            from { transform: translateY(-50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
         }
 
         input {
@@ -52,13 +41,6 @@
             border: 1px solid #ddd;
             border-radius: 5px;
             font-size: 14px;
-            transition: transform 0.2s, border-color 0.2s;
-        }
-
-        input:focus {
-            transform: scale(1.05);
-            border-color: #007bff;
-            outline: none;
         }
 
         .btn {
@@ -69,25 +51,7 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
-            transition: background-color 0.3s, transform 0.3s;
             width: 100%;
-        }
-
-        .btn:hover {
-            background-color: #218838;
-            transform: scale(1.05);
-        }
-
-        .loading {
-            display: none;
-            margin-top: 20px;
-            animation: pulse 1s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
         }
 
         .result {
@@ -95,20 +59,9 @@
             font-size: 18px;
             font-weight: bold;
             color: #333;
-            transition: opacity 0.5s;
-            opacity: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
-        }
-
-        .result.visible {
-            opacity: 1;
-        }
-
-        .alert {
-            color: red;
-            margin-top: 10px;
         }
 
         .copy-btn {
@@ -119,12 +72,6 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            transition: transform 0.2s, background-color 0.3s;
-        }
-
-        .copy-btn:hover {
-            background-color: #0056b3;
-            transform: scale(1.05);
         }
 
         .copied {
@@ -148,9 +95,6 @@
                 <input type="text" id="host" placeholder="ادخل الهوست الخاص بك" required>
                 <button type="submit" class="btn">توليد الكود</button>
             </form>
-            <div class="loading" id="loading">
-                <img src="https://i.gifer.com/ZZ5H.gif" alt="تحميل..." width="50">
-            </div>
             <div id="result" class="result"></div>
             <div class="alert" id="alert"></div>
         </div>
@@ -162,41 +106,21 @@
 
         document.getElementById('vlessForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            const lastGenerated = sessionStorage.getItem('lastGenerated');
-            const currentTime = new Date().getTime();
+            
+            const username = document.getElementById('username').value || generateRandomUsername();
+            const host = document.getElementById('host').value || generateRandomHost();
+            const expirationDate = new Date();
+            expirationDate.setDate(expirationDate.getDate() + 7);  // صلاحية الكود 7 أيام
 
-            if (lastGenerated && (currentTime - lastGenerated < 10 * 60 * 1000)) {
-                const remainingTime = Math.ceil((10 * 60 * 1000 - (currentTime - lastGenerated)) / 1000);
-                alert(`يمكنك إنشاء كود جديد بعد ${remainingTime} ثانية.`);
-                return;
-            }
+            const code = `vless://I_Love_🇫🇷_${username}@${host}:443?encryption=none&security=tls&sni=${host}&type=grpc&serviceName=vless-grpc&mode=gun#${username}-gRPC`;
+            
+            document.getElementById('result').innerHTML = `
+                <button class="copy-btn" onclick="copyCode('${code}')">نسخ الكود</button>
+                <p>صلاحية الكود حتى: ${expirationDate.toDateString()}</p>
+            `;
 
-            if (availableCodes <= 0) {
-                alert("انتهت الأكواد المتاحة.");
-                return;
-            }
-
-            document.getElementById('loading').style.display = 'block';
-            document.getElementById('alert').innerText = '';
-            document.getElementById('result').classList.remove('visible');
-
-            setTimeout(() => {
-                const username = document.getElementById('username').value || generateRandomUsername();
-                const host = document.getElementById('host').value || generateRandomHost();
-
-                const code = `vless://I_Love_🇫🇷_${username}@${host}:443?encryption=none&security=tls&sni=${host}&type=grpc&serviceName=vless-grpc&mode=gun#${username}-gRPC`;
-
-                document.getElementById('result').innerHTML = `
-                    تم إنشاء الكود:
-                    <p id="codeText">${code}</p>
-                    <button class="copy-btn" onclick="copyCode()">نسخ الكود</button>
-                `;
-                document.getElementById('result').classList.add('visible');
-                availableCodes--;
-                sessionStorage.setItem('lastGenerated', currentTime);
-                document.getElementById('loading').style.display = 'none';
-                document.getElementById('alert').innerText = `الأكواد المتبقية: ${availableCodes}`;
-            }, 7000);
+            availableCodes--;
+            document.getElementById('alert').innerText = `الأكواد المتبقية: ${availableCodes}`;
         });
 
         function generateRandomUsername() {
@@ -209,9 +133,8 @@
             return hosts[Math.floor(Math.random() * hosts.length)];
         }
 
-        function copyCode() {
-            const codeText = document.getElementById('codeText').innerText;
-            navigator.clipboard.writeText(codeText).then(() => {
+        function copyCode(code) {
+            navigator.clipboard.writeText(code).then(() => {
                 const copyBtn = document.querySelector('.copy-btn');
                 copyBtn.classList.add('copied');
                 copyBtn.innerText = 'تم النسخ!';
