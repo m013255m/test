@@ -1,8 +1,8 @@
-<!DOCTYPE html>
-<html lang="ar">
+<!DOCTYPE html><html lang="ar">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="b8a671daaac5fb48bf809fde23b4d7bda470d852" content="b8a671daaac5fb48bf809fde23b4d7bda470d852" />
     <title>قسم الأكواد</title>
     <style>
         body {
@@ -24,115 +24,113 @@
         .header h1 {
             font-size: 40px;
             margin: 0;
-            font-family: 'Arial', sans-serif;
+            font-family:  Arial , sans-serif;
         }
         .header p {
             font-size: 18px;
             margin-top: 10px;
+        }/* تأثير حركي جديد */
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
         }
+        to {
+            opacity: 1;
+        }
+    }
 
-        /* تأثير حركي جديد */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
+    h1 {
+        margin-bottom: 20px;
+        padding-top: 50px;
+    }
 
-        h1 {
-            margin-bottom: 20px;
-            padding-top: 50px;
-        }
+    .sections {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+        padding: 20px;
+    }
 
-        .sections {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-            padding: 20px;
-        }
+    .section {
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        padding: 20px;
+        width: 150px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s;
+    }
+    .section:hover {
+        transform: scale(1.05);
+    }
 
-        .section {
-            background-color: #fff;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            padding: 20px;
-            width: 150px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s;
-        }
-        .section:hover {
-            transform: scale(1.05);
-        }
+    .btn {
+        padding: 10px 15px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        margin-top: 10px;
+    }
+    .btn:hover {
+        background-color: #218838;
+    }
 
-        .btn {
-            padding: 10px 15px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            margin-top: 10px;
-        }
-        .btn:hover {
-            background-color: #218838;
-        }
+    .flag {
+        width: 100%;
+        height: auto;
+        margin-bottom: 10px;
+    }
+</style>
 
-        .flag {
-            width: 100%;
-            height: auto;
-            margin-bottom: 10px;
-        }
-    </style>
 </head>
-<body>
+<body><!-- الواجهة العلوية بعرض الموقع مع تأثير حركي -->
+<div class="header">
+    <h1>SSH NOX</h1>
+    <p>Get Free SSH and VPN Account for 30 Days</p>
+</div>
 
-    <!-- الواجهة العلوية بعرض الموقع مع تأثير حركي -->
-    <div class="header">
-        <h1>SSH NOX</h1>
-        <p>Get Free SSH and VPN Account for 30 Days</p>
+<h1>قسم الأكواد</h1>
+
+<div class="sections">
+    <div class="section">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/4/65/Flag_of_Belgium.svg" alt="Belgium Flag" class="flag">
+        <h2>BELGIUM</h2>
+        <a href="generate_belgium.html" class="btn">انتقل إلى توليد الكود</a>
     </div>
-
-    <h1>قسم الأكواد</h1>
-    
-    <div class="sections">
-        <div class="section">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/4/65/Flag_of_Belgium.svg" alt="Belgium Flag" class="flag">
-            <h2>BELGIUM</h2>
-            <a href="generate_belgium.html" class="btn">انتقل إلى توليد الكود</a>
-        </div>
-        <div class="section">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/0/1d/Flag_of_Austria.svg" alt="Austria Flag" class="flag">
-            <h2>AUSTRIA</h2>
-            <a href="generate_austria.html" class="btn">انتقل إلى توليد الكود</a>
-        </div>
-        <div class="section">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/9/9c/Flag_of_Denmark.svg" alt="Denmark Flag" class="flag">
-            <h2>DENMARK</h2>
-            <a href="generate_denmark.html" class="btn">انتقل إلى توليد الكود</a>
-        </div>
-        <div class="section">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/c/cf/Flag_of_Canada.svg" alt="Canada Flag" class="flag">
-            <h2>CANADA</h2>
-            <a href="generate_canada.html" class="btn">انتقل إلى توليد الكود</a>
-        </div>
-        <div class="section">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Flag_of_France.svg" alt="France Flag" class="flag">
-            <h2>FRANCE</h2>
-            <a href="generate_france.html" class="btn">انتقل إلى توليد الكود</a>
-        </div>
-        <div class="section">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b4/Flag_of_Germany.svg" alt="Germany Flag" class="flag">
-            <h2>GERMANY</h2>
-            <a href="generate_germany.html" class="btn">انتقل إلى توليد الكود</a>
-        </div>
+    <div class="section">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/1d/Flag_of_Austria.svg" alt="Austria Flag" class="flag">
+        <h2>AUSTRIA</h2>
+        <a href="generate_austria.html" class="btn">انتقل إلى توليد الكود</a>
     </div>
+    <div class="section">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/9/9c/Flag_of_Denmark.svg" alt="Denmark Flag" class="flag">
+        <h2>DENMARK</h2>
+        <a href="generate_denmark.html" class="btn">انتقل إلى توليد الكود</a>
+    </div>
+    <div class="section">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/c/cf/Flag_of_Canada.svg" alt="Canada Flag" class="flag">
+        <h2>CANADA</h2>
+        <a href="generate_canada.html" class="btn">انتقل إلى توليد الكود</a>
+    </div>
+    <div class="section">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Flag_of_France.svg" alt="France Flag" class="flag">
+        <h2>FRANCE</h2>
+        <a href="generate_france.html" class="btn">انتقل إلى توليد الكود</a>
+    </div>
+    <div class="section">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b4/Flag_of_Germany.svg" alt="Germany Flag" class="flag">
+        <h2>GERMANY</h2>
+        <a href="generate_germany.html" class="btn">انتقل إلى توليد الكود</a>
+    </div>
+</div>
 
-    <script>
-        // هنا يمكنك إضافة أي كود لتحديث عدد الأكواد المتاحة إذا كنت ترغب بذلك.
-    </script>
+<script>
+    // هنا يمكنك إضافة أي كود لتحديث عدد الأكواد المتاحة إذا كنت ترغب بذلك.
+</script>
+
 </body>
 </html>
