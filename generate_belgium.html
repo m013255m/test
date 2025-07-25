@@ -1,87 +1,370 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>توليد أكواد VLESS من بلجيكا</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f4f4;
-            text-align: center;
-            padding: 50px;
-            animation: fadeIn 0.5s;
+        @import url( https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap );
+        
+        :root {
+            --primary-bg: #121212;
+            --secondary-bg: #1E1E1E;
+            --gold: #D4AF37;
+            --gold-light: #FFD700;
+            --text-color: #E0E0E0;
+            --text-secondary: #B0B0B0;
         }
         
-        h1 {
-            margin-bottom: 20px;
-            color: #333;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-
+        
+        body {
+            font-family:  Tajawal , sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-color);
+            min-height: 100vh;
+            overflow-x: hidden;
+            animation: fadeIn 0.8s ease-out;
+        }
+        
         .container {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
+            padding: 30px 20px;
+            max-width: 100%;
         }
-
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            color: var(--gold);
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+            position: relative;
+        }
+        
+        h1::after {
+            content:   ;
+            position: absolute;
+            bottom: -10px;
+            right: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        }
+        
         .form-box {
-            background-color: #1f1f1f;
+            background: linear-gradient(145deg, #1E1E1E 0%, #2A2A2A 100%);
+            border: 1px solid #333;
             border-radius: 15px;
             padding: 30px;
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
-            width: 350px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 450px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-
+        
+        .form-box::before {
+            content:   ;
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(212, 175, 55, 0.1), transparent);
+            transform: rotate(45deg);
+            z-index: 0;
+            transition: all 0.6s ease;
+            opacity: 0;
+        }
+        
+        .form-box:hover::before {
+            opacity: 1;
+            animation: shine 1.5s;
+        }
+        
         input {
-            width: 90%;
-            padding: 8px;
-            margin: 10px 0;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 14px;
+            width: 100%;
+            padding: 12px 15px;
+            margin: 15px 0;
+            background-color: #2a2a2a;
+            border: 1px solid #444;
+            border-radius: 8px;
+            font-size: 16px;
+            color: var(--text-color);
+            transition: all 0.3s ease;
         }
-
+        
+        input:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+        }
+        
+        input::placeholder {
+            color: #777;
+        }
+        
         .btn {
-            padding: 10px 15px;
-            background-color: #28a745;
+            padding: 14px 25px;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+            color: #000;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            width: 100%;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.4);
+        }
+        
+        .btn:disabled {
+            background: #555;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .result-container {
+            margin-top: 25px;
+            width: 100%;
+            text-align: center;
+            opacity: 0;
+            height: 0;
+            overflow: hidden;
+            transition: all 0.5s ease;
+        }
+        
+        .result-container.show {
+            opacity: 1;
+            height: auto;
+        }
+        
+        .copy-btn {
+            padding: 12px 25px;
+            background: linear-gradient(135deg, #007bff 0%, #00a1ff 100%);
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 50px;
             cursor: pointer;
-            font-size: 16px;
-            width: 100%;
+            font-size: 1rem;
+            font-weight: 600;
+            margin: 15px 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
-
-        .result {
-            margin-top: 20px;
-            font-size: 18px;
-            font-weight: bold;
-            color: #333;
-            display: flex;
+        
+        .copy-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 123, 255, 0.4);
+        }
+        
+        .copy-btn.copied {
+            background: linear-gradient(135deg, #28a745 0%, #2ecc71 100%);
+            animation: pulse 0.5s;
+        }
+        
+        .expiration {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 10px;
+        }
+        
+        .alert {
+            color: #ff6b6b;
+            margin-top: 15px;
+            font-size: 0.9rem;
+            min-height: 20px;
+        }
+        
+        .codes-left {
+            color: var(--gold);
+            font-weight: 600;
+            margin-top: 15px;
+        }
+        
+        /* Loading Animation */
+        .loading-container {
+            display: none;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
+            margin: 20px 0;
         }
-
-        .copy-btn {
+        
+        .loading {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(212, 175, 55, 0.2);
+            border-top: 4px solid var(--gold);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 15px;
+        }
+        
+        .loading-text {
+            color: var(--gold);
+            font-size: 1rem;
             margin-top: 10px;
-            padding: 8px 12px;
-            background-color: #007bff;
-            color: white;
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes shine {
+            0% { left: -100%; }
+            20% { left: 100%; }
+            100% { left: 100%; }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Code Reveal Effect */
+        .code-reveal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.5s ease;
+        }
+        
+        .code-reveal.show {
+            opacity: 1;
+            pointer-events: all;
+        }
+        
+        .code-content {
+            background: linear-gradient(145deg, #1E1E1E 0%, #2A2A2A 100%);
+            border: 1px solid var(--gold);
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 90%;
+            width: 500px;
+            text-align: center;
+            position: relative;
+            transform: scale(0.9);
+            transition: all 0.3s ease;
+        }
+        
+        .code-reveal.show .code-content {
+            transform: scale(1);
+            animation: slideUp 0.5s ease;
+        }
+        
+        .code-content h3 {
+            color: var(--gold);
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+        
+        .code-text {
+            background: #2a2a2a;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: monospace;
+            word-break: break-all;
+            color: var(--text-color);
+            margin-bottom: 20px;
+            border: 1px solid #444;
+        }
+        
+        .close-btn {
+            padding: 10px 20px;
+            background: var(--gold);
+            color: #000;
             border: none;
-            border-radius: 5px;
+            border-radius: 50px;
             cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
         }
-
-        .copied {
-            animation: copiedAnimation 0.5s;
+        
+        .close-btn:hover {
+            background: var(--gold-light);
+            transform: translateY(-2px);
         }
-
-        @keyframes copiedAnimation {
-            0% { transform: scale(1); background-color: #007bff; }
-            50% { transform: scale(1.1); background-color: #28a745; }
-            100% { transform: scale(1); background-color: #007bff; }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .form-box {
+                padding: 25px;
+            }
+            
+            .btn {
+                padding: 12px 20px;
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .form-box {
+                padding: 20px;
+            }
+            
+            input {
+                padding: 10px 12px;
+                font-size: 14px;
+            }
         }
     </style>
 </head>
@@ -93,58 +376,206 @@
             <form id="vlessForm">
                 <input type="text" id="username" placeholder="ادخل اليوزر الخاص بك" required>
                 <input type="text" id="host" placeholder="ادخل الهوست الخاص بك" required>
-                <button type="submit" class="btn">توليد الكود</button>
+                <button type="submit" class="btn" id="generateBtn">
+                    <i class="fas fa-key"></i> توليد الكود
+                </button>
             </form>
-            <div id="result" class="result"></div>
+            
+            <div class="loading-container" id="loadingContainer">
+                <div class="loading"></div>
+                <p class="loading-text">جاري توليد الكود، الرجاء الانتظار...</p>
+            </div>
+            
             <div class="alert" id="alert"></div>
+            <div class="codes-left" id="codesLeft">الأكواد المتبقية: 200</div>
+            
+            <div class="result-container" id="resultContainer">
+                <button class="copy-btn" id="copyBtn">
+                    <i class="fas fa-copy"></i> نسخ الكود الآن
+                </button>
+                <p class="expiration" id="expirationDate"></p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Code Reveal Effect -->
+    <div class="code-reveal" id="codeReveal">
+        <div class="code-content">
+            <h3>الكود الخاص بك</h3>
+            <div class="code-text" id="revealedCode"></div>
+            <button class="close-btn" id="closeBtn">إغلاق</button>
         </div>
     </div>
 
     <script>
+        // Configuration
         const maxCodes = 200;
         let availableCodes = maxCodes;
-
-        document.getElementById('vlessForm').addEventListener('submit', function(e) {
+        const cooldownTime = 5 * 60 * 1000; // 5 دقائق بالميلي ثانية
+        let currentCode =   ;
+        
+        // DOM Elements
+        const form = document.getElementById("vlessForm");
+        const generateBtn = document.getElementById("generateBtn");
+        const loadingContainer = document.getElementById("loadingContainer");
+        const resultContainer = document.getElementById("resultContainer");
+        const copyBtn = document.getElementById("copyBtn");
+        const alertEl = document.getElementById("alert");
+        const codesLeftEl = document.getElementById("codesLeft");
+        const expirationEl = document.getElementById("expirationDate");
+        const codeReveal = document.getElementById("codeReveal");
+        const revealedCode = document.getElementById("revealedCode");
+        const closeBtn = document.getElementById("closeBtn");
+        
+        // Update codes left display
+        codesLeftEl.textContent = `الأكواد المتبقية: ${availableCodes}`;
+        
+        // Form Submission
+        form.addEventListener("submit", function(e) {
             e.preventDefault();
             
-            const username = document.getElementById('username').value || generateRandomUsername();
-            const host = document.getElementById('host').value || generateRandomHost();
-            const expirationDate = new Date();
-            expirationDate.setDate(expirationDate.getDate() + 7);  // صلاحية الكود 7 أيام
-
-            const code = `vless://I_Love_🇫🇷_${username}@${host}:443?encryption=none&security=tls&sni=${host}&type=grpc&serviceName=vless-grpc&mode=gun#${username}-gRPC`;
+            // Check cooldown
+            const lastGenerated = localStorage.getItem("lastGeneratedTime");
+            const now = new Date().getTime();
             
-            document.getElementById('result').innerHTML = `
-                <button class="copy-btn" onclick="copyCode('${code}')">نسخ الكود</button>
-                <p>صلاحية الكود حتى: ${expirationDate.toDateString()}</p>
-            `;
-
-            availableCodes--;
-            document.getElementById('alert').innerText = `الأكواد المتبقية: ${availableCodes}`;
+            if (lastGenerated && now - lastGenerated < cooldownTime) {
+                const remainingTime = Math.ceil((cooldownTime - (now - lastGenerated)) / 1000);
+                showAlert(`يجب الانتظار ${remainingTime} ثانية قبل توليد كود جديد`,  error );
+                return;
+            }
+            
+            // Check if codes are available
+            if (availableCodes <= 0) {
+                showAlert( لقد تم استنفاذ جميع الأكواد المتاحة ,  error );
+                return;
+            }
+            
+            // Get input values
+            const username = document.getElementById("username").value.trim() || generateRandomUsername();
+            const host = document.getElementById("host").value.trim() || generateRandomHost();
+            
+            // Validate inputs
+            if (!username || !host) {
+                showAlert( الرجاء إدخال اليوزر والهوست ,  error );
+                return;
+            }
+            
+            // Generate code
+            currentCode = `vless://I_Love_🇫🇷_${username}@${host}:443?encryption=none&security=tls&sni=${host}&type=grpc&serviceName=vless-grpc&mode=gun#${username}-gRPC`;
+            
+            // Set expiration date (7 days from now)
+            const expirationDate = new Date();
+            expirationDate.setDate(expirationDate.getDate() + 7);
+            expirationEl.textContent = `صلاحية الكود حتى: ${expirationDate.toLocaleDateString()}`;
+            
+            // Start generation process
+            startGeneration();
         });
-
+        
+        // Start generation with loading effect
+        function startGeneration() {
+            // Disable form
+            generateBtn.disabled = true;
+            form.querySelectorAll( input ).forEach(input => input.disabled = true);
+            
+            // Show loading
+            loadingContainer.style.display =  flex ;
+            resultContainer.classList.remove( show );
+            alertEl.textContent =   ;
+            
+            // Simulate generation delay (10 seconds)
+            setTimeout(() => {
+                finishGeneration();
+            }, 10000);
+        }
+        
+        // Finish generation process
+        function finishGeneration() {
+            // Hide loading
+            loadingContainer.style.display =  none ;
+            
+            // Update codes count
+            availableCodes--;
+            codesLeftEl.textContent = `الأكواد المتبقية: ${availableCodes}`;
+            
+            // Show result
+            resultContainer.classList.add( show );
+            
+            // Enable form
+            generateBtn.disabled = false;
+            form.querySelectorAll( input ).forEach(input => input.disabled = false);
+            
+            // Set cooldown
+            localStorage.setItem("lastGeneratedTime", new Date().getTime());
+            
+            // Show success message
+            showAlert( تم توليد الكود بنجاح! ,  success );
+        }
+        
+        // Copy button click handler
+        copyBtn.addEventListener( click , function() {
+            // Show code in reveal modal
+            revealedCode.textContent = currentCode;
+            codeReveal.classList.add( show );
+            
+            // Copy to clipboard
+            navigator.clipboard.writeText(currentCode).then(() => {
+                // Change button style temporarily
+                copyBtn.innerHTML =  <i class="fas fa-check"></i> تم النسخ! ;
+                copyBtn.classList.add( copied );
+                
+                setTimeout(() => {
+                    copyBtn.innerHTML =  <i class="fas fa-copy"></i> نسخ الكود الآن ;
+                    copyBtn.classList.remove( copied );
+                }, 2000);
+            });
+        });
+        
+        // Close modal button
+        closeBtn.addEventListener( click , function() {
+            codeReveal.classList.remove( show );
+        });
+        
+        // Helper functions
         function generateRandomUsername() {
             const randomNum = Math.floor(Math.random() * 10000);
             return `user${randomNum}`;
         }
-
+        
         function generateRandomHost() {
-            const hosts = ['example.com', 'test.com', 'myhost.com', 'yourhost.com', 'demo.com'];
+            const hosts = ["fr1.server.com", "fr2.server.com", "fr3.server.com", "fr4.server.com", "fr5.server.com"];
             return hosts[Math.floor(Math.random() * hosts.length)];
         }
-
-        function copyCode(code) {
-            navigator.clipboard.writeText(code).then(() => {
-                const copyBtn = document.querySelector('.copy-btn');
-                copyBtn.classList.add('copied');
-                copyBtn.innerText = 'تم النسخ!';
-
-                setTimeout(() => {
-                    copyBtn.classList.remove('copied');
-                    copyBtn.innerText = 'نسخ الكود';
-                }, 2000);
-            });
+        
+        function showAlert(message, type) {
+            alertEl.textContent = message;
+            alertEl.style.color = type ===  error  ?  #ff6b6b  :  #2ecc71 ;
+            
+            // Auto hide after 5 seconds
+            setTimeout(() => {
+                if (alertEl.textContent === message) {
+                    alertEl.textContent =   ;
+                }
+            }, 5000);
         }
+        
+        // Initialize with cooldown check
+        window.addEventListener( load , function() {
+            const lastGenerated = localStorage.getItem("lastGeneratedTime");
+            const now = new Date().getTime();
+            
+            if (lastGenerated && now - lastGenerated < cooldownTime) {
+                const remainingTime = Math.ceil((cooldownTime - (now - lastGenerated)) / 1000);
+                showAlert(`يمكنك توليد كود جديد بعد ${remainingTime} ثانية`,  error );
+                generateBtn.disabled = true;
+                
+                // Enable button after cooldown
+                setTimeout(() => {
+                    generateBtn.disabled = false;
+                    alertEl.textContent =   ;
+                }, cooldownTime - (now - lastGenerated));
+            }
+        });
     </script>
 
 </body>
