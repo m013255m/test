@@ -1,136 +1,485 @@
-<!DOCTYPE html><html lang="ar">
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="b8a671daaac5fb48bf809fde23b4d7bda470d852" content="b8a671daaac5fb48bf809fde23b4d7bda470d852" />
     <title>قسم الأكواد</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap');
+        
+        :root {
+            --primary-bg: #121212;
+            --secondary-bg: #1E1E1E;
+            --gold: #D4AF37;
+            --gold-light: #FFD700;
+            --text-color: #E0E0E0;
+            --text-secondary: #B0B0B0;
+        }
+        
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
+        
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-color);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* Header Styles */
         .header {
-            background-color: #003366; /* لون أزرق غامق */
-            color: white;
-            padding: 20px;
-            width: 100%; /* عرض كامل */
+            background: linear-gradient(135deg, #000000 0%, #1A1A1A 100%);
+            color: var(--gold);
+            padding: 30px 20px;
+            width: 100%;
             text-align: center;
             position: relative;
             overflow: hidden;
-            animation: fadeIn 2s ease-in-out; /* تأثير حركي جديد */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border-bottom: 2px solid var(--gold);
+            animation: fadeIn 1.5s ease-in-out;
         }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 50%, rgba(212, 175, 55, 0.1) 0%, transparent 50%);
+            z-index: 0;
+        }
+        
         .header h1 {
-            font-size: 40px;
+            font-size: 3.5rem;
             margin: 0;
-            font-family:  Arial , sans-serif;
+            font-weight: 700;
+            position: relative;
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+            letter-spacing: 1px;
+            animation: glow 2s infinite alternate;
         }
+        
         .header p {
-            font-size: 18px;
-            margin-top: 10px;
-        }/* تأثير حركي جديد */
-    @keyframes fadeIn {
-        from {
+            font-size: 1.2rem;
+            margin-top: 15px;
+            color: var(--text-secondary);
+            position: relative;
+            font-weight: 300;
+        }
+        
+        /* Main Content */
+        .main-container {
+            padding: 40px 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        h1.section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            color: var(--gold);
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        h1.section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        }
+        
+        /* Cards Grid */
+        .sections {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            padding: 20px 0;
+        }
+        
+        .section {
+            background: linear-gradient(145deg, #1E1E1E 0%, #2A2A2A 100%);
+            border: 1px solid #333;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(212, 175, 55, 0.1), transparent);
+            transform: rotate(45deg);
+            z-index: -1;
+            transition: all 0.6s ease;
             opacity: 0;
         }
-        to {
+        
+        .section:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+            border-color: var(--gold);
+        }
+        
+        .section:hover::before {
+            opacity: 1;
+            animation: shine 1.5s;
+        }
+        
+        .section h2 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: var(--gold);
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .flag {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border: 1px solid #333;
+            transition: all 0.3s ease;
+        }
+        
+        .section:hover .flag {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Button Styles */
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+            color: #000;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 100%);
+            z-index: -1;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.4);
+        }
+        
+        .btn:hover::before {
             opacity: 1;
         }
-    }
-
-    h1 {
-        margin-bottom: 20px;
-        padding-top: 50px;
-    }
-
-    .sections {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 20px;
-        padding: 20px;
-    }
-
-    .section {
-        background-color: #fff;
-        border: 1px solid #ccc;
-        border-radius: 10px;
-        padding: 20px;
-        width: 150px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        transition: transform 0.2s;
-    }
-    .section:hover {
-        transform: scale(1.05);
-    }
-
-    .btn {
-        padding: 10px 15px;
-        background-color: #28a745;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 16px;
-        margin-top: 10px;
-    }
-    .btn:hover {
-        background-color: #218838;
-    }
-
-    .flag {
-        width: 100%;
-        height: auto;
-        margin-bottom: 10px;
-    }
-</style>
-
+        
+        .btn i {
+            font-size: 1.1rem;
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 5px rgba(212, 175, 55, 0.5);
+            }
+            to {
+                text-shadow: 0 0 15px rgba(212, 175, 55, 0.8), 0 0 20px rgba(212, 175, 55, 0.6);
+            }
+        }
+        
+        @keyframes shine {
+            0% {
+                left: -100%;
+            }
+            20% {
+                left: 100%;
+            }
+            100% {
+                left: 100%;
+            }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .header p {
+                font-size: 1rem;
+            }
+            
+            h1.section-title {
+                font-size: 2rem;
+            }
+            
+            .sections {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+            
+            .section h2 {
+                font-size: 1.5rem;
+            }
+            
+            .btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+        }
+        
+        /* Floating Particles Effect */
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .particle {
+            position: absolute;
+            background: rgba(212, 175, 55, 0.6);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+    </style>
 </head>
-<body><!-- الواجهة العلوية بعرض الموقع مع تأثير حركي -->
-<div class="header">
-    <h1>SSH NOX</h1>
-    <p>Get Free SSH and VPN Account for 30 Days</p>
-</div>
 
-<h1>قسم الأكواد</h1>
+<body>
+    <!-- Floating Particles Background -->
+    <div class="particles" id="particles"></div>
+    
+    <!-- الواجهة العلوية بعرض الموقع مع تأثير حركي -->
+    <div class="header">
+        <h1>SSH NOX</h1>
+        <p>Get Free SSH and VPN Account for 30 Days</p>
+    </div>
 
-<div class="sections">
-    <div class="section">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/4/65/Flag_of_Belgium.svg" alt="Belgium Flag" class="flag">
-        <h2>BELGIUM</h2>
-        <a href="generate_belgium.html" class="btn">انتقل إلى توليد الكود</a>
+    <div class="main-container">
+        <h1 class="section-title">قسم الأكواد</h1>
+        
+        <div class="sections">
+            <div class="section">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/4/65/Flag_of_Belgium.svg" alt="Belgium Flag" class="flag">
+                <h2>BELGIUM</h2>
+                <div class="btn-container">
+                    <a href="generate_belgium.html" class="btn">
+                        <i class="fas fa-key"></i> انتقل إلى توليد الكود
+                    </a>
+                </div>
+            </div>
+            
+            <div class="section">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/0/1d/Flag_of_Austria.svg" alt="Austria Flag" class="flag">
+                <h2>AUSTRIA</h2>
+                <div class="btn-container">
+                    <a href="generate_austria.html" class="btn">
+                        <i class="fas fa-key"></i> انتقل إلى توليد الكود
+                    </a>
+                </div>
+            </div>
+            
+            <div class="section">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/9/9c/Flag_of_Denmark.svg" alt="Denmark Flag" class="flag">
+                <h2>DENMARK</h2>
+                <div class="btn-container">
+                    <a href="generate_denmark.html" class="btn">
+                        <i class="fas fa-key"></i> انتقل إلى توليد الكود
+                    </a>
+                </div>
+            </div>
+            
+            <div class="section">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/c/cf/Flag_of_Canada.svg" alt="Canada Flag" class="flag">
+                <h2>CANADA</h2>
+                <div class="btn-container">
+                    <a href="generate_canada.html" class="btn">
+                        <i class="fas fa-key"></i> انتقل إلى توليد الكود
+                    </a>
+                </div>
+            </div>
+            
+            <div class="section">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Flag_of_France.svg" alt="France Flag" class="flag">
+                <h2>FRANCE</h2>
+                <div class="btn-container">
+                    <a href="generate_france.html" class="btn">
+                        <i class="fas fa-key"></i> انتقل إلى توليد الكود
+                    </a>
+                </div>
+            </div>
+            
+            <div class="section">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b4/Flag_of_Germany.svg" alt="Germany Flag" class="flag">
+                <h2>GERMANY</h2>
+                <div class="btn-container">
+                    <a href="generate_germany.html" class="btn">
+                        <i class="fas fa-key"></i> انتقل إلى توليد الكود
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="section">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/0/1d/Flag_of_Austria.svg" alt="Austria Flag" class="flag">
-        <h2>AUSTRIA</h2>
-        <a href="generate_austria.html" class="btn">انتقل إلى توليد الكود</a>
-    </div>
-    <div class="section">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/9/9c/Flag_of_Denmark.svg" alt="Denmark Flag" class="flag">
-        <h2>DENMARK</h2>
-        <a href="generate_denmark.html" class="btn">انتقل إلى توليد الكود</a>
-    </div>
-    <div class="section">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/c/cf/Flag_of_Canada.svg" alt="Canada Flag" class="flag">
-        <h2>CANADA</h2>
-        <a href="generate_canada.html" class="btn">انتقل إلى توليد الكود</a>
-    </div>
-    <div class="section">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Flag_of_France.svg" alt="France Flag" class="flag">
-        <h2>FRANCE</h2>
-        <a href="generate_france.html" class="btn">انتقل إلى توليد الكود</a>
-    </div>
-    <div class="section">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b4/Flag_of_Germany.svg" alt="Germany Flag" class="flag">
-        <h2>GERMANY</h2>
-        <a href="generate_germany.html" class="btn">انتقل إلى توليد الكود</a>
-    </div>
-</div>
 
-<script>
-    // هنا يمكنك إضافة أي كود لتحديث عدد الأكواد المتاحة إذا كنت ترغب بذلك.
-</script>
-
+    <script>
+        // إنشاء جزيئات متحركة
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // تحديد حجم عشوائي للجزيء
+                const size = Math.random() * 5 + 1;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // تحديد موضع عشوائي
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                
+                // تحديد الشفافية
+                particle.style.opacity = Math.random() * 0.5 + 0.1;
+                
+                // تحديد مدة الحركة
+                const duration = Math.random() * 20 + 10;
+                particle.style.animation = `float ${duration}s linear infinite`;
+                
+                // تأخير عشوائي لبدء الحركة
+                particle.style.animationDelay = `${Math.random() * 10}s`;
+                
+                // إضافة الجزيء إلى الحاوية
+                particlesContainer.appendChild(particle);
+                
+                // إنشاء حركة عائمة
+                const keyframes = `
+                    @keyframes float {
+                        0% {
+                            transform: translate(0, 0);
+                        }
+                        50% {
+                            transform: translate(${Math.random() * 100 - 50}px, ${Math.random() * 100 - 50}px);
+                        }
+                        100% {
+                            transform: translate(0, 0);
+                        }
+                    }
+                `;
+                
+                const style = document.createElement('style');
+                style.innerHTML = keyframes;
+                document.head.appendChild(style);
+            }
+        }
+        
+        // بدء إنشاء الجزيئات عند تحميل الصفحة
+        window.addEventListener('load', createParticles);
+        
+        // تأثيرات إضافية عند التمرير
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('.section');
+            const scrollPosition = window.scrollY + window.innerHeight;
+            
+            sections.forEach(section => {
+                const sectionPosition = section.offsetTop + section.offsetHeight / 2;
+                
+                if (scrollPosition > sectionPosition) {
+                    section.style.opacity = '1';
+                    section.style.transform = 'translateY(0)';
+                }
+            });
+        });
+        
+        // تهيئة تأثيرات الظهور الأولية
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('.section');
+            sections.forEach((section, index) => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(20px)';
+                section.style.transition = `all 0.5s ease ${index * 0.1}s`;
+                
+                setTimeout(() => {
+                    section.style.opacity = '1';
+                    section.style.transform = 'translateY(0)';
+                }, 100);
+            });
+        });
+    </script>
 </body>
 </html>
