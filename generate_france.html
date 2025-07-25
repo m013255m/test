@@ -6,7 +6,7 @@
     <title>توليد أكواد VLESS من فرنسا</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap');
+        @import url( https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap );
         
         :root {
             --primary-bg: #121212;
@@ -24,7 +24,7 @@
         }
         
         body {
-            font-family: 'Tajawal', sans-serif;
+            font-family:  Tajawal , sans-serif;
             background-color: var(--primary-bg);
             color: var(--text-color);
             min-height: 100vh;
@@ -50,7 +50,7 @@
         }
         
         h1::after {
-            content: '';
+            content:   ;
             position: absolute;
             bottom: -10px;
             right: 0;
@@ -333,7 +333,7 @@
         const maxCodes = 200;
         let availableCodes = maxCodes;
         const cooldownTime = 5 * 60 * 1000; // 5 دقائق بالميلي ثانية
-        let currentCode = '';
+        let currentCode =   ;
         
         // DOM Elements
         const form = document.getElementById("vlessForm");
@@ -361,7 +361,7 @@
             
             // Validate inputs
             if (!username || !host) {
-                showAlert('الرجاء إدخال اليوزر والهوست', 'error');
+                showAlert( الرجاء إدخال اليوزر والهوست ,  error );
                 return;
             }
             
@@ -381,12 +381,12 @@
         function startGeneration() {
             // Disable form
             generateBtn.disabled = true;
-            form.querySelectorAll('input').forEach(input => input.disabled = true);
+            form.querySelectorAll( input ).forEach(input => input.disabled = true);
             
             // Show loading
-            loadingContainer.style.display = 'flex';
-            resultContainer.classList.remove('show');
-            alertEl.textContent = '';
+            loadingContainer.style.display =  flex ;
+            resultContainer.classList.remove( show );
+            alertEl.textContent =   ;
             
             // Simulate generation delay (10 seconds)
             setTimeout(() => {
@@ -397,45 +397,45 @@
         // Finish generation process
         function finishGeneration() {
             // Hide loading
-            loadingContainer.style.display = 'none';
+            loadingContainer.style.display =  none ;
             
             // Update codes count
             availableCodes--;
             codesLeftEl.textContent = `الأكواد المتبقية: ${availableCodes}`;
             
             // Show result
-            resultContainer.classList.add('show');
+            resultContainer.classList.add( show );
             
             // Enable form
             generateBtn.disabled = false;
-            form.querySelectorAll('input').forEach(input => input.disabled = false);
+            form.querySelectorAll( input ).forEach(input => input.disabled = false);
             
             // Show success message
-            showAlert('تم توليد الكود بنجاح!', 'success');
+            showAlert( تم توليد الكود بنجاح! ,  success );
         }
         
         // Copy button click handler
-        copyBtn.addEventListener('click', function() {
+        copyBtn.addEventListener( click , function() {
             // Show code in reveal modal
             revealedCode.textContent = currentCode;
-            codeReveal.classList.add('show');
+            codeReveal.classList.add( show );
             
             // Copy to clipboard
             navigator.clipboard.writeText(currentCode).then(() => {
                 // Change button style temporarily
-                copyBtn.innerHTML = '<i class="fas fa-check"></i> تم النسخ!';
-                copyBtn.classList.add('copied');
+                copyBtn.innerHTML =  <i class="fas fa-check"></i> تم النسخ! ;
+                copyBtn.classList.add( copied );
                 
                 setTimeout(() => {
-                    copyBtn.innerHTML = '<i class="fas fa-copy"></i> نسخ الكود الآن';
-                    copyBtn.classList.remove('copied');
+                    copyBtn.innerHTML =  <i class="fas fa-copy"></i> نسخ الكود الآن ;
+                    copyBtn.classList.remove( copied );
                 }, 2000);
             });
         });
         
         // Close modal button
-        closeBtn.addEventListener('click', function() {
-            codeReveal.classList.remove('show');
+        closeBtn.addEventListener( click , function() {
+            codeReveal.classList.remove( show );
         });
         
         // Helper functions
@@ -451,7 +451,7 @@
         
         function showAlert(message, type) {
             alertEl.textContent = message;
-            alertEl.style.color = type === 'error' ? '#ff6b6b' : '#2ecc71';
+            alertEl.style.color = type ===  error  ?  #ff6b6b  :  #2ecc71 ;
         }
     </script>
 
