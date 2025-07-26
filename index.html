@@ -161,7 +161,7 @@
         
         .flag {
             width: 100%;
-            height: 120px; /* تم تعديل الارتفاع ليكون أصغر */
+            height: 120px;
             object-fit: cover;
             border-radius: 10px;
             margin-bottom: 20px;
@@ -229,6 +229,50 @@
             font-size: 1.1rem;
         }
         
+        /* Loading Overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        
+        .loading-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        
+        .loading-content {
+            text-align: center;
+        }
+        
+        .loading-spinner {
+            width: 80px;
+            height: 80px;
+            border: 8px solid rgba(212, 175, 55, 0.3);
+            border-top: 8px solid var(--gold);
+            border-radius: 50%;
+            animation: spin 1.5s linear infinite;
+            margin: 0 auto 20px;
+        }
+        
+        .loading-text {
+            color: var(--gold);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 20px;
+        }
+        
         /* Animations */
         @keyframes fadeIn {
             from {
@@ -262,6 +306,17 @@
             }
         }
         
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
         /* Responsive Design */
         @media (max-width: 768px) {
             .header h1 {
@@ -292,12 +347,22 @@
             }
             
             .flag {
-                height: 100px; /* تعديل الارتفاع للشاشات الصغيرة */
+                height: 100px;
             }
             
             .btn {
                 padding: 10px 20px;
                 font-size: 0.9rem;
+            }
+            
+            .loading-spinner {
+                width: 60px;
+                height: 60px;
+                border-width: 6px;
+            }
+            
+            .loading-text {
+                font-size: 1.2rem;
             }
         }
         
@@ -326,6 +391,14 @@
     <!-- Floating Particles Background -->
     <div class="particles" id="particles"></div>
     
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">جاري التحميل، الرجاء الانتظار...</div>
+        </div>
+    </div>
+    
     <!-- الواجهة العلوية بعرض الموقع مع تأثير حركي -->
     <div class="header">
         <h1>SSH NOX</h1>
@@ -337,10 +410,10 @@
         
         <div class="sections">
             <div class="section">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/4/65/Flag_of_Belgium.svg" alt="Belgium Flag" class="flag">
+                <img src="https://i.postimg.cc/tgKQ11sD/Flag-of-Belgium-1830-svg.png" alt="Belgium Flag" class="flag">
                 <h2>BELGIUM</h2>
                 <div class="btn-container">
-                    <a href="generate_belgium.html" class="btn">
+                    <a href="generate_belgium.html" class="btn" data-country="belgium">
                         <i class="fas fa-key"></i> انتقل إلى توليد الكود
                     </a>
                 </div>
@@ -350,7 +423,7 @@
                 <img src="https://upload.wikimedia.org/wikipedia/commons/0/1d/Flag_of_Austria.svg" alt="Austria Flag" class="flag">
                 <h2>AUSTRIA</h2>
                 <div class="btn-container">
-                    <a href="generate_austria.html" class="btn">
+                    <a href="generate_austria.html" class="btn" data-country="austria">
                         <i class="fas fa-key"></i> انتقل إلى توليد الكود
                     </a>
                 </div>
@@ -360,7 +433,7 @@
                 <img src="https://upload.wikimedia.org/wikipedia/commons/9/9c/Flag_of_Denmark.svg" alt="Denmark Flag" class="flag">
                 <h2>DENMARK</h2>
                 <div class="btn-container">
-                    <a href="generate_denmark.html" class="btn">
+                    <a href="generate_denmark.html" class="btn" data-country="denmark">
                         <i class="fas fa-key"></i> انتقل إلى توليد الكود
                     </a>
                 </div>
@@ -370,7 +443,7 @@
                 <img src="https://upload.wikimedia.org/wikipedia/commons/c/cf/Flag_of_Canada.svg" alt="Canada Flag" class="flag">
                 <h2>CANADA</h2>
                 <div class="btn-container">
-                    <a href="generate_canada.html" class="btn">
+                    <a href="generate_canada.html" class="btn" data-country="canada">
                         <i class="fas fa-key"></i> انتقل إلى توليد الكود
                     </a>
                 </div>
@@ -380,17 +453,27 @@
                 <img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Flag_of_France.svg" alt="France Flag" class="flag">
                 <h2>FRANCE</h2>
                 <div class="btn-container">
-                    <a href="generate_france.html" class="btn">
+                    <a href="generate_france.html" class="btn" data-country="france">
                         <i class="fas fa-key"></i> انتقل إلى توليد الكود
                     </a>
                 </div>
             </div>
             
             <div class="section">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b4/Flag_of_Germany.svg" alt="Germany Flag" class="flag">
+                <img src="https://i.postimg.cc/W30R02rV/Flag-of-Germany-svg.png" alt="Germany Flag" class="flag">
                 <h2>GERMANY</h2>
                 <div class="btn-container">
-                    <a href="generate_germany.html" class="btn">
+                    <a href="generate_germany.html" class="btn" data-country="germany">
+                        <i class="fas fa-key"></i> انتقل إلى توليد الكود
+                    </a>
+                </div>
+            </div>
+            
+            <div class="section">
+                <img src="https://i.postimg.cc/gjpCDfqZ/Flag-of-Australia-converted-svg.png" alt="Australia Flag" class="flag">
+                <h2>AUSTRALIA</h2>
+                <div class="btn-container">
+                    <a href="generate_australia.html" class="btn" data-country="australia">
                         <i class="fas fa-key"></i> انتقل إلى توليد الكود
                     </a>
                 </div>
@@ -481,6 +564,31 @@
                     section.style.opacity = '1';
                     section.style.transform = 'translateY(0)';
                 }, 100);
+            });
+        });
+        
+        // تأثير التحميل عند النقر على الأزرار
+        document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const loadingOverlay = document.getElementById('loadingOverlay');
+                const country = this.getAttribute('data-country');
+                
+                // عرض تأثير التحميل
+                loadingOverlay.classList.add('active');
+                
+                // تأثير التكبير والتصغير
+                let scale = 1;
+                const pulseInterval = setInterval(() => {
+                    scale = scale === 1 ? 1.05 : 1;
+                    loadingOverlay.querySelector('.loading-spinner').style.transform = `scale(${scale})`;
+                }, 500);
+                
+                // الانتقال بعد 10 ثواني
+                setTimeout(() => {
+                    clearInterval(pulseInterval);
+                    window.location.href = this.href;
+                }, 10000);
             });
         });
     </script>
