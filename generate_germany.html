@@ -17,6 +17,7 @@
             --text-secondary: #B0B0B0;
             --dark-blue: #0d356e;
             --darker-blue: #0a2347;
+            --success-green: #28a745;
         }
         
         * {
@@ -31,6 +32,39 @@
             color: var(--text-color);
             min-height: 100vh;
             overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* النقاط المتحركة (الفقاقيع الذهبية) */
+        .bubbles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .bubble {
+            position: absolute;
+            bottom: -100px;
+            background: rgba(212, 175, 55, 0.2);
+            border-radius: 50%;
+            animation: float 15s infinite ease-in;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+                bottom: -100px;
+            }
+            100% {
+                transform: translateY(-1000px) rotate(720deg);
+                opacity: 0;
+                bottom: 100%;
+            }
         }
         
         /* تأثير الهبوط للعنوان */
@@ -46,6 +80,19 @@
             color: var(--gold);
             text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
             animation: glow 2s infinite alternate;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+        
+        .header h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
         }
         
         .container {
@@ -89,15 +136,15 @@
             box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
         }
         
-        /* زر التوليد الجديد */
+        /* زر التوليد المعدل */
         .btn {
-            padding: 14px 25px;
+            padding: 12px 20px; /* حجم أصغر قليلاً */
             background: linear-gradient(135deg, var(--dark-blue) 0%, var(--darker-blue) 100%);
             color: white;
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            font-size: 1.1rem;
+            font-size: 1rem; /* حجم خط أصغر قليلاً */
             font-weight: 600;
             width: 100%;
             margin-top: 10px;
@@ -133,7 +180,35 @@
             left: 100%;
         }
         
-        /* بقية الأنماط كما هي */
+        /* زر النسخ المعدل */
+        .copy-btn {
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #007bff 0%, #00a1ff 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            margin: 15px 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .copy-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 123, 255, 0.4);
+        }
+        
+        .copy-btn.copied {
+            background: linear-gradient(135deg, var(--success-green) 0%, #2ecc71 100%);
+            animation: pulse 0.5s;
+        }
+        
+        /* بقية الأنماط */
         .result-container {
             margin-top: 25px;
             width: 100%;
@@ -204,7 +279,12 @@
             100% { transform: rotate(360deg); }
         }
         
-        /* بقية الأنماط الأصلية بدون تعديل */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
         .alert {
             color: #ff6b6b;
             margin-top: 15px;
@@ -216,23 +296,6 @@
             color: var(--gold);
             font-weight: 600;
             margin-top: 15px;
-        }
-        
-        .copy-btn {
-            padding: 12px 25px;
-            background: linear-gradient(135deg, #007bff 0%, #00a1ff 100%);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 600;
-            margin: 15px 0;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
         }
         
         /* التنسيق للشاشات الصغيرة */
@@ -263,6 +326,9 @@
     </style>
 </head>
 <body>
+    <!-- الفقاقيع الذهبية المتحركة -->
+    <div class="bubbles" id="bubbles"></div>
+
     <div class="header">
         <h1>توليد أكواد VLESS المانيا</h1>
     </div>
@@ -295,6 +361,33 @@
     </div>
 
     <script>
+        // إنشاء الفقاقيع الذهبية
+        function createBubbles() {
+            const bubblesContainer = document.getElementById('bubbles');
+            const bubbleCount = 15;
+            
+            for (let i = 0; i < bubbleCount; i++) {
+                const bubble = document.createElement('div');
+                bubble.classList.add('bubble');
+                
+                // تحديد حجم عشوائي للفقاعة
+                const size = Math.random() * 100 + 50;
+                bubble.style.width = `${size}px`;
+                bubble.style.height = `${size}px`;
+                
+                // تحديد موضع عشوائي
+                bubble.style.left = `${Math.random() * 100}%`;
+                
+                // تحديد مدة الحركة
+                const duration = Math.random() * 10 + 10;
+                bubble.style.animationDuration = `${duration}s`;
+                bubble.style.animationDelay = `${Math.random() * 5}s`;
+                
+                // إضافة الفقاعة إلى الحاوية
+                bubblesContainer.appendChild(bubble);
+            }
+        }
+        
         // Configuration
         const maxCodes = 200;
         let availableCodes = maxCodes;
@@ -434,8 +527,10 @@
             }, 5000);
         }
         
-        // Initialize with cooldown check
+        // Initialize
         window.addEventListener('load', function() {
+            createBubbles();
+            
             const lastGenerated = localStorage.getItem("lastGeneratedTime");
             const now = new Date().getTime();
             
