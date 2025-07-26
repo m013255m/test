@@ -7,7 +7,7 @@
     <title>قسم الأكواد</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap');
+        @import url( https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap );
         
         :root {
             --primary-bg: #121212;
@@ -25,7 +25,7 @@
         }
         
         body {
-            font-family: 'Tajawal', sans-serif;
+            font-family:  Tajawal , sans-serif;
             background-color: var(--primary-bg);
             color: var(--text-color);
             min-height: 100vh;
@@ -47,7 +47,7 @@
         }
         
         .header::before {
-            content: '';
+            content:   ;
             position: absolute;
             top: 0;
             left: 0;
@@ -93,7 +93,7 @@
         }
         
         h1.section-title::after {
-            content: '';
+            content:   ;
             position: absolute;
             bottom: -10px;
             right: 0;
@@ -127,7 +127,7 @@
         }
         
         .section::before {
-            content: '';
+            content:   ;
             position: absolute;
             top: -50%;
             left: -50%;
@@ -185,7 +185,7 @@
         .btn {
             padding: 12px 25px;
             background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
-            color: #000 !important;
+            color: #000;
             border: none;
             border-radius: 50px;
             cursor: pointer;
@@ -204,7 +204,7 @@
         }
         
         .btn::before {
-            content: '';
+            content:   ;
             position: absolute;
             top: 0;
             left: 0;
@@ -227,7 +227,6 @@
         
         .btn i {
             font-size: 1.1rem;
-            color: #000 !important;
         }
         
         /* Loading Overlay */
@@ -472,12 +471,12 @@
     <script>
         // إنشاء جزيئات متحركة
         function createParticles() {
-            const particlesContainer = document.getElementById('particles');
+            const particlesContainer = document.getElementById( particles );
             const particleCount = 30;
             
             for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.classList.add('particle');
+                const particle = document.createElement( div );
+                particle.classList.add( particle );
                 
                 // تحديد حجم عشوائي للجزيء
                 const size = Math.random() * 5 + 1;
@@ -516,60 +515,60 @@
                     }
                 `;
                 
-                const style = document.createElement('style');
+                const style = document.createElement( style );
                 style.innerHTML = keyframes;
                 document.head.appendChild(style);
             }
         }
         
         // بدء إنشاء الجزيئات عند تحميل الصفحة
-        window.addEventListener('load', createParticles);
+        window.addEventListener( load , createParticles);
         
         // تأثيرات إضافية عند التمرير
-        window.addEventListener('scroll', () => {
-            const sections = document.querySelectorAll('.section');
+        window.addEventListener( scroll , () => {
+            const sections = document.querySelectorAll( .section );
             const scrollPosition = window.scrollY + window.innerHeight;
             
             sections.forEach(section => {
                 const sectionPosition = section.offsetTop + section.offsetHeight / 2;
                 
                 if (scrollPosition > sectionPosition) {
-                    section.style.opacity = '1';
-                    section.style.transform = 'translateY(0)';
+                    section.style.opacity =  1 ;
+                    section.style.transform =  translateY(0) ;
                 }
             });
         });
         
         // تهيئة تأثيرات الظهور الأولية
-        document.addEventListener('DOMContentLoaded', () => {
-            const sections = document.querySelectorAll('.section');
+        document.addEventListener( DOMContentLoaded , () => {
+            const sections = document.querySelectorAll( .section );
             sections.forEach((section, index) => {
-                section.style.opacity = '0';
-                section.style.transform = 'translateY(20px)';
+                section.style.opacity =  0 ;
+                section.style.transform =  translateY(20px) ;
                 section.style.transition = `all 0.5s ease ${index * 0.1}s`;
                 
                 setTimeout(() => {
-                    section.style.opacity = '1';
-                    section.style.transform = 'translateY(0)';
+                    section.style.opacity =  1 ;
+                    section.style.transform =  translateY(0) ;
                 }, 100);
             });
         });
         
         // تأثير التحميل عند النقر على الأزرار
-        document.querySelectorAll('.btn').forEach(btn => {
-            btn.addEventListener('click', function(e) {
+        document.querySelectorAll( .btn ).forEach(btn => {
+            btn.addEventListener( click , function(e) {
                 e.preventDefault();
-                const loadingOverlay = document.getElementById('loadingOverlay');
-                const country = this.getAttribute('data-country');
+                const loadingOverlay = document.getElementById( loadingOverlay );
+                const country = this.getAttribute( data-country );
                 
                 // عرض تأثير التحميل
-                loadingOverlay.classList.add('active');
+                loadingOverlay.classList.add( active );
                 
                 // تأثير التكبير والتصغير
                 let scale = 1;
                 const pulseInterval = setInterval(() => {
                     scale = scale === 1 ? 1.05 : 1;
-                    loadingOverlay.querySelector('.loading-spinner').style.transform = `scale(${scale})`;
+                    loadingOverlay.querySelector( .loading-spinner ).style.transform = `scale(${scale})`;
                 }, 500);
                 
                 // الانتقال بعد 10 ثواني
