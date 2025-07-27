@@ -90,12 +90,12 @@
         h1.section-title {
             text-align: center;
             font-size: 2.8rem;
-            margin-bottom: 15px; /* تم تقليل المسافة هنا */
+            margin-bottom: 15px;
             color: var(--gold);
             position: relative;
             width: 100%;
             display: block;
-            padding-bottom: 15px; /* تم تقليل المسافة هنا */
+            padding-bottom: 15px;
             opacity: 0;
             transform: translateY(30px);
             animation: titleAppear 1.2s forwards 0.5s;
@@ -136,7 +136,7 @@
             position: relative;
             width: 100%;
             height: 4px;
-            margin: 5px auto 20px; /* تم تقليل المسافة هنا */
+            margin: 5px auto 20px;
             background: linear-gradient(90deg, 
                 transparent, 
                 rgba(212, 175, 55, 0.3), 
@@ -737,46 +737,70 @@
             });
         });
         
-        // Unity Ads Integration
+        // إعلانات Unity Ads
         function showUnityAd(event) {
             event.preventDefault();
+            const targetUrl = event.target.href;
             const loadingOverlay = document.getElementById('loadingOverlay');
             
-            // عرض تأثير التحميل
+            // متغير لتتبع حالة الإعلان
+            window.adCompleted = false;
+            
+            // عرض شاشة التحميل
             loadingOverlay.classList.add('active');
             
-            // تهيئة Unity Ads
-            window.unityAds = window.unityAds || {};
-            
             // تفعيل وضع الاختبار (احذف هذا السطر عند النشر النهائي)
-            window.unityAds.setTestMode(true);
+            if (typeof unityAds !== 'undefined') {
+                unityAds.setTestMode(true);
+            }
             
-            window.unityAds.init({
-                gameId: '5910875', // معرف التطبيق الذي قدمته
-                onInitComplete: function() {
-                    console.log('تم تهيئة الإعلان بنجاح!');
-                    // عرض إعلان المكافآت
-                    window.unityAds.showAd('Rewarded_Android') // الوحدة الإعلانية التي قدمتها
-                        .then(() => {
-                            console.log('تمت مشاهدة الإعلان بالكامل');
-                            loadingOverlay.classList.remove('active');
-                            window.location.href = event.target.href;
-                        })
-                        .catch(error => {
-                            console.error('خطأ في عرض الإعلان:', error);
-                            loadingOverlay.classList.remove('active');
-                            window.location.href = event.target.href;
-                        });
-                },
-                onInitFailed: function(error) {
-                    console.error('فشل تهيئة الإعلان:', error);
-                    loadingOverlay.classList.remove('active');
-                    window.location.href = event.target.href;
+            // تهيئة الإعلانات
+            if (typeof unityAds !== 'undefined') {
+                unityAds.init({
+                    gameId: '5910875', // معرف التطبيق الخاص بك
+                    onInitComplete: function() {
+                        console.log('تم تهيئة الإعلانات بنجاح');
+                        
+                        // محاولة عرض الإعلان
+                        unityAds.showAd('Rewarded_Android')
+                            .then(() => {
+                                console.log('تم عرض الإعلان بنجاح');
+                                window.adCompleted = true;
+                                loadingOverlay.classList.remove('active');
+                                window.location.href = targetUrl;
+                            })
+                            .catch(error => {
+                                console.error('فشل عرض الإعلان:', error);
+                                fallbackRedirect(targetUrl);
+                            });
+                    },
+                    onInitFailed: function(error) {
+                        console.error('فشل تهيئة الإعلانات:', error);
+                        fallbackRedirect(targetUrl);
+                    }
+                });
+            } else {
+                console.error('Unity Ads SDK غير متاح');
+                fallbackRedirect(targetUrl);
+            }
+            
+            // الانتقال بعد 10 ثواني إذا لم يظهر الإعلان
+            setTimeout(() => {
+                if (!window.adCompleted) {
+                    console.log('انتهى الوقت المحدد دون عرض الإعلان');
+                    fallbackRedirect(targetUrl);
                 }
-            });
+            }, 10000);
         }
         
-        // ربط الأزرار بحدث عرض الإعلان
+        // دالة الانتقال الاحتياطي
+        function fallbackRedirect(url) {
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            if (loadingOverlay) loadingOverlay.classList.remove('active');
+            window.location.href = url;
+        }
+        
+        // ربط الأزرار بحدث النقر
         document.querySelectorAll('.btn[data-country]').forEach(btn => {
             btn.addEventListener('click', showUnityAd);
         });
