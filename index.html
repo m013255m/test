@@ -88,49 +88,52 @@
         
         h1.section-title {
             text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 40px;
+            font-size: 2.8rem;
+            margin-bottom: 50px;
             color: var(--gold);
             position: relative;
             width: 100%;
             display: block;
-            padding-bottom: 25px;
-            text-shadow: 0 0 15px rgba(212, 175, 55, 0.6);
-            animation: titleGlow 2s infinite alternate;
+            padding-bottom: 30px;
+            animation: titleFloat 3s infinite ease-in-out;
         }
         
         h1.section-title::after {
             content: '';
             position: absolute;
-            bottom: 10px;
-            right: 50%;
-            transform: translateX(50%);
-            width: 250px;
-            height: 4px;
+            bottom: 15px;
+            right: 0;
+            width: 100%;
+            height: 5px;
             background: linear-gradient(90deg, 
                           transparent, 
                           var(--gold), 
                           var(--gold-light), 
                           var(--gold), 
                           transparent);
-            border-radius: 4px;
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.7);
-            z-index: 1;
+            border-radius: 5px;
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.8);
+            animation: lineFlow 4s infinite linear;
+            background-size: 200% 100%;
         }
         
         h1.section-title::before {
-            content: '';
+            content: 'قسم الأكواد';
             position: absolute;
-            bottom: 8px;
-            right: 50%;
-            transform: translateX(50%);
-            width: 270px;
-            height: 8px;
-            background: rgba(212, 175, 55, 0.15);
-            border-radius: 4px;
-            filter: blur(2px);
-            z-index: 0;
-            animation: linePulse 3s infinite ease-in-out;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                          var(--gold-light), 
+                          var(--gold), 
+                          var(--gold-light));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            opacity: 0.2;
+            z-index: -1;
+            animation: textShine 6s infinite alternate;
         }
         
         /* Cards Grid */
@@ -361,28 +364,32 @@
             }
         }
         
-        @keyframes titleGlow {
-            0% {
-                text-shadow: 0 0 15px rgba(212, 175, 55, 0.6);
+        @keyframes titleFloat {
+            0%, 100% {
+                transform: translateY(0);
             }
-            100% {
-                text-shadow: 0 0 25px rgba(212, 175, 55, 0.9), 
-                            0 0 35px rgba(212, 175, 55, 0.5);
+            50% {
+                transform: translateY(-10px);
             }
         }
         
-        @keyframes linePulse {
+        @keyframes lineFlow {
             0% {
-                opacity: 0.15;
-                width: 270px;
-            }
-            50% {
-                opacity: 0.25;
-                width: 290px;
+                background-position: 100% 50%;
             }
             100% {
-                opacity: 0.15;
-                width: 270px;
+                background-position: 0% 50%;
+            }
+        }
+        
+        @keyframes textShine {
+            0% {
+                opacity: 0.1;
+                filter: blur(2px);
+            }
+            100% {
+                opacity: 0.3;
+                filter: blur(1px);
             }
         }
         
@@ -452,18 +459,8 @@
             }
             
             h1.section-title {
-                font-size: 2rem;
-                padding-bottom: 20px;
-            }
-            
-            h1.section-title::after {
-                width: 200px;
-                bottom: 8px;
-            }
-            
-            h1.section-title::before {
-                width: 220px;
-                bottom: 6px;
+                font-size: 2.2rem;
+                padding-bottom: 25px;
             }
             
             .social-circles {
@@ -497,17 +494,7 @@
             
             h1.section-title {
                 font-size: 1.8rem;
-                padding-bottom: 15px;
-            }
-            
-            h1.section-title::after {
-                width: 180px;
-                bottom: 7px;
-            }
-            
-            h1.section-title::before {
-                width: 200px;
-                bottom: 5px;
+                padding-bottom: 20px;
             }
             
             .btn {
