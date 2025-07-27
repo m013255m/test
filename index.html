@@ -6,7 +6,6 @@
     <meta name="b8a671daaac5fb48bf809fde23b4d7bda470d852" content="b8a671daaac5fb48bf809fde23b4d7bda470d852" />
     <title>قسم الأكواد</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.unityads.unity3d.com/unity-ads-webgl/1.0/UnityAds.js"></script>
     <style>
         @import url(https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap);
         
@@ -737,72 +736,29 @@
             });
         });
         
-        // إعلانات Unity Ads
-        function showUnityAd(event) {
-            event.preventDefault();
-            const targetUrl = event.target.href;
-            const loadingOverlay = document.getElementById('loadingOverlay');
-            
-            // متغير لتتبع حالة الإعلان
-            window.adCompleted = false;
-            
-            // عرض شاشة التحميل
-            loadingOverlay.classList.add('active');
-            
-            // تفعيل وضع الاختبار (احذف هذا السطر عند النشر النهائي)
-            if (typeof unityAds !== 'undefined') {
-                unityAds.setTestMode(true);
-            }
-            
-            // تهيئة الإعلانات
-            if (typeof unityAds !== 'undefined') {
-                unityAds.init({
-                    gameId: '5910875', // معرف التطبيق الخاص بك
-                    onInitComplete: function() {
-                        console.log('تم تهيئة الإعلانات بنجاح');
-                        
-                        // محاولة عرض الإعلان
-                        unityAds.showAd('Rewarded_Android')
-                            .then(() => {
-                                console.log('تم عرض الإعلان بنجاح');
-                                window.adCompleted = true;
-                                loadingOverlay.classList.remove('active');
-                                window.location.href = targetUrl;
-                            })
-                            .catch(error => {
-                                console.error('فشل عرض الإعلان:', error);
-                                fallbackRedirect(targetUrl);
-                            });
-                    },
-                    onInitFailed: function(error) {
-                        console.error('فشل تهيئة الإعلانات:', error);
-                        fallbackRedirect(targetUrl);
-                    }
-                });
-            } else {
-                console.error('Unity Ads SDK غير متاح');
-                fallbackRedirect(targetUrl);
-            }
-            
-            // الانتقال بعد 10 ثواني إذا لم يظهر الإعلان
-            setTimeout(() => {
-                if (!window.adCompleted) {
-                    console.log('انتهى الوقت المحدد دون عرض الإعلان');
-                    fallbackRedirect(targetUrl);
-                }
-            }, 10000);
-        }
-        
-        // دالة الانتقال الاحتياطي
-        function fallbackRedirect(url) {
-            const loadingOverlay = document.getElementById('loadingOverlay');
-            if (loadingOverlay) loadingOverlay.classList.remove('active');
-            window.location.href = url;
-        }
-        
-        // ربط الأزرار بحدث النقر
-        document.querySelectorAll('.btn[data-country]').forEach(btn => {
-            btn.addEventListener('click', showUnityAd);
+        // تأثير التحميل عند النقر على الأزرار
+        document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const loadingOverlay = document.getElementById('loadingOverlay');
+                const country = this.getAttribute('data-country');
+                
+                // عرض تأثير التحميل
+                loadingOverlay.classList.add('active');
+                
+                // تأثير التكبير والتصغير
+                let scale = 1;
+                const pulseInterval = setInterval(() => {
+                    scale = scale === 1 ? 1.05 : 1;
+                    loadingOverlay.querySelector('.loading-spinner').style.transform = `scale(${scale})`;
+                }, 500);
+                
+                // الانتقال بعد 10 ثواني
+                setTimeout(() => {
+                    clearInterval(pulseInterval);
+                    window.location.href = this.href;
+                }, 10000);
+            });
         });
         
         // Social media circle click handlers
