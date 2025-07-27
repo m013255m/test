@@ -7,7 +7,7 @@
     <title>قسم الأكواد</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @import url( https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap );
+        @import url(https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap);
         
         :root {
             --primary-bg: #121212;
@@ -27,7 +27,7 @@
         }
         
         body {
-            font-family:  Tajawal , sans-serif;
+            font-family: Tajawal, sans-serif;
             background-color: var(--primary-bg);
             color: var(--text-color);
             min-height: 100vh;
@@ -51,7 +51,7 @@
         }
         
         .header::before {
-            content:   ;
+            content: '';
             position: absolute;
             top: 0;
             left: 0;
@@ -94,19 +94,43 @@
             position: relative;
             width: 100%;
             display: block;
-            padding-bottom: 15px;
+            padding-bottom: 25px;
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.6);
+            animation: titleGlow 2s infinite alternate;
         }
         
         h1.section-title::after {
-            content:   ;
+            content: '';
             position: absolute;
-            bottom: 0;
-            right: 0;
-            width: 100%;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, var(--gold), transparent);
-            box-shadow: 0 0 10px var(--gold-light);
-            animation: lineGlow 2s infinite alternate;
+            bottom: 10px;
+            right: 50%;
+            transform: translateX(50%);
+            width: 250px;
+            height: 4px;
+            background: linear-gradient(90deg, 
+                          transparent, 
+                          var(--gold), 
+                          var(--gold-light), 
+                          var(--gold), 
+                          transparent);
+            border-radius: 4px;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.7);
+            z-index: 1;
+        }
+        
+        h1.section-title::before {
+            content: '';
+            position: absolute;
+            bottom: 8px;
+            right: 50%;
+            transform: translateX(50%);
+            width: 270px;
+            height: 8px;
+            background: rgba(212, 175, 55, 0.15);
+            border-radius: 4px;
+            filter: blur(2px);
+            z-index: 0;
+            animation: linePulse 3s infinite ease-in-out;
         }
         
         /* Cards Grid */
@@ -134,7 +158,7 @@
         }
         
         .section::before {
-            content:   ;
+            content: '';
             position: absolute;
             top: -50%;
             left: -50%;
@@ -211,7 +235,7 @@
         }
         
         .btn::before {
-            content:   ;
+            content: '';
             position: absolute;
             top: 0;
             left: 0;
@@ -337,12 +361,28 @@
             }
         }
         
-        @keyframes lineGlow {
-            from {
-                box-shadow: 0 0 5px var(--gold-light);
+        @keyframes titleGlow {
+            0% {
+                text-shadow: 0 0 15px rgba(212, 175, 55, 0.6);
             }
-            to {
-                box-shadow: 0 0 15px var(--gold-light);
+            100% {
+                text-shadow: 0 0 25px rgba(212, 175, 55, 0.9), 
+                            0 0 35px rgba(212, 175, 55, 0.5);
+            }
+        }
+        
+        @keyframes linePulse {
+            0% {
+                opacity: 0.15;
+                width: 270px;
+            }
+            50% {
+                opacity: 0.25;
+                width: 290px;
+            }
+            100% {
+                opacity: 0.15;
+                width: 270px;
             }
         }
         
@@ -381,6 +421,26 @@
             }
         }
         
+        /* Floating Particles Effect */
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .particle {
+            position: absolute;
+            background: rgba(212, 175, 55, 0.6);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: float 15s infinite ease-in-out;
+        }
+        
         /* Responsive Design */
         @media (max-width: 768px) {
             .header h1 {
@@ -393,6 +453,17 @@
             
             h1.section-title {
                 font-size: 2rem;
+                padding-bottom: 20px;
+            }
+            
+            h1.section-title::after {
+                width: 200px;
+                bottom: 8px;
+            }
+            
+            h1.section-title::before {
+                width: 220px;
+                bottom: 6px;
             }
             
             .social-circles {
@@ -424,6 +495,21 @@
                 height: 100px;
             }
             
+            h1.section-title {
+                font-size: 1.8rem;
+                padding-bottom: 15px;
+            }
+            
+            h1.section-title::after {
+                width: 180px;
+                bottom: 7px;
+            }
+            
+            h1.section-title::before {
+                width: 200px;
+                bottom: 5px;
+            }
+            
             .btn {
                 padding: 10px 20px;
                 font-size: 0.9rem;
@@ -448,26 +534,6 @@
                 width: 50px;
                 height: 50px;
             }
-        }
-        
-        /* Floating Particles Effect */
-        .particles {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            pointer-events: none;
-            z-index: -1;
-            overflow: hidden;
-        }
-        
-        .particle {
-            position: absolute;
-            background: rgba(212, 175, 55, 0.6);
-            border-radius: 50%;
-            pointer-events: none;
-            animation: float 15s infinite ease-in-out;
         }
     </style>
 </head>
@@ -570,35 +636,28 @@
         // إنشاء جزيئات متحركة
         function createParticles() {
             const particlesContainer = document.getElementById('particles');
-            const particleCount = 60; // زيادة عدد الجزيئات مع الحفاظ على الحجم
+            const particleCount = 60;
             
             for (let i = 0; i < particleCount; i++) {
                 const particle = document.createElement('div');
                 particle.classList.add('particle');
                 
-                // تحديد حجم عشوائي للجزيء (نفس الحجم القديم)
                 const size = Math.random() * 5 + 1;
                 particle.style.width = `${size}px`;
                 particle.style.height = `${size}px`;
                 
-                // تحديد موضع عشوائي
                 particle.style.left = `${Math.random() * 100}%`;
                 particle.style.top = `${Math.random() * 100}%`;
                 
-                // تحديد الشفافية
                 particle.style.opacity = Math.random() * 0.5 + 0.1;
                 
-                // تحديد مدة الحركة
                 const duration = Math.random() * 20 + 10;
                 particle.style.animationDuration = `${duration}s`;
                 
-                // تأخير عشوائي لبدء الحركة
                 particle.style.animationDelay = `${Math.random() * 10}s`;
                 
-                // إضافة الجزيء إلى الحاوية
                 particlesContainer.appendChild(particle);
                 
-                // إنشاء حركة عائمة مختلفة لكل جزيء
                 const keyframesName = `float-${i}`;
                 const keyframes = `
                     @keyframes ${keyframesName} {
@@ -622,10 +681,8 @@
             }
         }
         
-        // بدء إنشاء الجزيئات عند تحميل الصفحة
         window.addEventListener('load', createParticles);
         
-        // تأثيرات إضافية عند التمرير
         window.addEventListener('scroll', () => {
             const sections = document.querySelectorAll('.section');
             const scrollPosition = window.scrollY + window.innerHeight;
@@ -640,7 +697,6 @@
             });
         });
         
-        // تهيئة تأثيرات الظهور الأولية
         document.addEventListener('DOMContentLoaded', () => {
             const sections = document.querySelectorAll('.section');
             sections.forEach((section, index) => {
@@ -655,24 +711,20 @@
             });
         });
         
-        // تأثير التحميل عند النقر على الأزرار
         document.querySelectorAll('.btn').forEach(btn => {
             btn.addEventListener('click', function(e) {
                 e.preventDefault();
                 const loadingOverlay = document.getElementById('loadingOverlay');
                 const country = this.getAttribute('data-country');
                 
-                // عرض تأثير التحميل
                 loadingOverlay.classList.add('active');
                 
-                // تأثير التكبير والتصغير
                 let scale = 1;
                 const pulseInterval = setInterval(() => {
                     scale = scale === 1 ? 1.05 : 1;
                     loadingOverlay.querySelector('.loading-spinner').style.transform = `scale(${scale})`;
                 }, 500);
                 
-                // الانتقال بعد 10 ثواني
                 setTimeout(() => {
                     clearInterval(pulseInterval);
                     window.location.href = this.href;
@@ -680,7 +732,6 @@
             });
         });
         
-        // Social media circle click handlers
         document.getElementById('telegram-circle').addEventListener('click', function() {
             window.location.href = 'https://t.me/your_telegram_channel';
         });
