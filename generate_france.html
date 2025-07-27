@@ -15,6 +15,9 @@
             --gold-light: #FFD700;
             --text-color: #E0E0E0;
             --text-secondary: #B0B0B0;
+            --dark-blue: #0d356e;
+            --darker-blue: #0a2347;
+            --success-green: #28a745;
         }
         
         * {
@@ -29,7 +32,60 @@
             color: var(--text-color);
             min-height: 100vh;
             overflow-x: hidden;
-            animation: fadeIn 0.8s ease-out;
+            position: relative;
+        }
+        
+        /* النقاط الذهبية الصغيرة الثابتة */
+        .gold-dots {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .dot {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background-color: rgba(212, 175, 55, 0.6);
+            border-radius: 50%;
+            animation: twinkle 3s infinite ease-in-out;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+        
+        /* تأثير الهبوط للعنوان */
+        .header {
+            text-align: center;
+            padding: 30px 20px;
+            animation: slideDown 1s ease-out;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            color: var(--gold);
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+            animation: glow 2s infinite alternate;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+        
+        .header h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
         }
         
         .container {
@@ -41,24 +97,7 @@
             max-width: 100%;
         }
         
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 30px;
-            color: var(--gold);
-            text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
-            position: relative;
-        }
-        
-        h1::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            right: 0;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--gold), transparent);
-        }
-        
+        /* تأثير الهبوط للمربع */
         .form-box {
             background: linear-gradient(145deg, #1E1E1E 0%, #2A2A2A 100%);
             border: 1px solid #333;
@@ -67,28 +106,9 @@
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
             width: 100%;
             max-width: 450px;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        
-        .form-box::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(212, 175, 55, 0.1), transparent);
-            transform: rotate(45deg);
-            z-index: 0;
-            transition: all 0.6s ease;
+            animation: slideUp 0.8s ease-out 0.3s forwards;
             opacity: 0;
-        }
-        
-        .form-box:hover::before {
-            opacity: 1;
-            animation: shine 1.5s;
+            transform: translateY(30px);
         }
         
         input {
@@ -109,40 +129,58 @@
             box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
         }
         
-        input::placeholder {
-            color: #777;
-        }
-        
+        /* زر التوليد المعدل بحجم مناسب */
         .btn {
-            padding: 14px 25px;
-            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
-            color: #000;
+            padding: 10px 18px; /* حجم مناسب */
+            background: linear-gradient(135deg, var(--dark-blue) 0%, var(--darker-blue) 100%);
+            color: white;
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            font-size: 1.1rem;
+            font-size: 0.95rem; /* حجم خط مناسب */
             font-weight: 600;
             width: 100%;
             margin-top: 10px;
             transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
             position: relative;
             overflow: hidden;
-            z-index: 1;
         }
         
         .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.6);
         }
         
-        .btn:disabled {
-            background: #555;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
+        /* زر النسخ المعدل */
+        .copy-btn {
+            padding: 10px 18px;
+            background: linear-gradient(135deg, #007bff 0%, #00a1ff 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin: 15px 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
         
+        .copy-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 123, 255, 0.4);
+        }
+        
+        .copy-btn.copied {
+            background: linear-gradient(135deg, var(--success-green) 0%, #2ecc71 100%);
+            animation: pulse 0.5s;
+        }
+        
+        /* بقية الأنماط */
         .result-container {
             margin-top: 25px;
             width: 100%;
@@ -158,53 +196,6 @@
             height: auto;
         }
         
-        .copy-btn {
-            padding: 12px 25px;
-            background: linear-gradient(135deg, #007bff 0%, #00a1ff 100%);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 600;
-            margin: 15px 0;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .copy-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0, 123, 255, 0.4);
-        }
-        
-        .copy-btn.copied {
-            background: linear-gradient(135deg, #28a745 0%, #2ecc71 100%);
-            animation: pulse 0.5s;
-        }
-        
-        .expiration {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            margin-top: 10px;
-        }
-        
-        .alert {
-            color: #ff6b6b;
-            margin-top: 15px;
-            font-size: 0.9rem;
-            min-height: 20px;
-        }
-        
-        .codes-left {
-            color: var(--gold);
-            font-weight: 600;
-            margin-top: 15px;
-        }
-        
-        /* Loading Animation */
         .loading-container {
             display: none;
             flex-direction: column;
@@ -223,27 +214,41 @@
             margin-bottom: 15px;
         }
         
-        .loading-text {
-            color: var(--gold);
-            font-size: 1rem;
-            margin-top: 10px;
+        /* الأنيميشنز */
+        @keyframes slideDown {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
         
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        @keyframes slideUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 5px rgba(212, 175, 55, 0.5);
+            }
+            to {
+                text-shadow: 0 0 15px rgba(212, 175, 55, 0.8), 0 0 20px rgba(212, 175, 55, 0.6);
+            }
         }
         
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
-        }
-        
-        @keyframes shine {
-            0% { left: -100%; }
-            20% { left: 100%; }
-            100% { left: 100%; }
         }
         
         @keyframes pulse {
@@ -252,108 +257,32 @@
             100% { transform: scale(1); }
         }
         
-        @keyframes slideUp {
-            from { 
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to { 
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .alert {
+            color: #ff6b6b;
+            margin-top: 15px;
+            font-size: 0.9rem;
+            min-height: 20px;
         }
         
-        /* Code Reveal Effect */
-        .code-reveal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            opacity: 0;
-            pointer-events: none;
-            transition: all 0.5s ease;
-        }
-        
-        .code-reveal.show {
-            opacity: 1;
-            pointer-events: all;
-        }
-        
-        .code-content {
-            background: linear-gradient(145deg, #1E1E1E 0%, #2A2A2A 100%);
-            border: 1px solid var(--gold);
-            border-radius: 15px;
-            padding: 30px;
-            max-width: 90%;
-            width: 500px;
-            text-align: center;
-            position: relative;
-            transform: scale(0.9);
-            transition: all 0.3s ease;
-        }
-        
-        .code-reveal.show .code-content {
-            transform: scale(1);
-            animation: slideUp 0.5s ease;
-        }
-        
-        .code-content h3 {
+        .codes-left {
             color: var(--gold);
-            margin-bottom: 20px;
-            font-size: 1.5rem;
-        }
-        
-        .code-text {
-            background: #2a2a2a;
-            padding: 15px;
-            border-radius: 8px;
-            font-family: monospace;
-            word-break: break-all;
-            color: var(--text-color);
-            margin-bottom: 20px;
-            border: 1px solid #444;
-        }
-        
-        .close-btn {
-            padding: 10px 20px;
-            background: var(--gold);
-            color: #000;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
             font-weight: 600;
-            transition: all 0.3s ease;
+            margin-top: 15px;
         }
         
-        .close-btn:hover {
-            background: var(--gold-light);
-            transform: translateY(-2px);
-        }
-        
-        /* Responsive Design */
+        /* التنسيق للشاشات الصغيرة */
         @media (max-width: 768px) {
-            h1 {
+            .header h1 {
                 font-size: 2rem;
             }
             
             .form-box {
                 padding: 25px;
             }
-            
-            .btn {
-                padding: 12px 20px;
-                font-size: 1rem;
-            }
         }
         
         @media (max-width: 480px) {
-            h1 {
+            .header h1 {
                 font-size: 1.8rem;
             }
             
@@ -369,9 +298,14 @@
     </style>
 </head>
 <body>
+    <!-- النقاط الذهبية الصغيرة -->
+    <div class="gold-dots" id="goldDots"></div>
+
+    <div class="header">
+        <h1>توليد أكواد VLESS فرنسا</h1>
+    </div>
 
     <div class="container">
-        <h1>توليد أكواد VLESS فرنسا</h1>
         <div class="form-box">
             <form id="vlessForm">
                 <input type="text" id="username" placeholder="ادخل اليوزر الخاص بك" required>
@@ -397,17 +331,28 @@
             </div>
         </div>
     </div>
-    
-    <!-- Code Reveal Effect -->
-    <div class="code-reveal" id="codeReveal">
-        <div class="code-content">
-            <h3>الكود الخاص بك</h3>
-            <div class="code-text" id="revealedCode"></div>
-            <button class="close-btn" id="closeBtn">إغلاق</button>
-        </div>
-    </div>
 
     <script>
+        // إنشاء النقاط الذهبية الصغيرة
+        function createGoldDots() {
+            const dotsContainer = document.getElementById('goldDots');
+            const dotCount = 100;
+            
+            for (let i = 0; i < dotCount; i++) {
+                const dot = document.createElement('div');
+                dot.classList.add('dot');
+                
+                // توزيع عشوائي للنقاط
+                dot.style.left = `${Math.random() * 100}%`;
+                dot.style.top = `${Math.random() * 100}%`;
+                
+                // تأخير عشوائي للوميض
+                dot.style.animationDelay = `${Math.random() * 3}s`;
+                
+                dotsContainer.appendChild(dot);
+            }
+        }
+        
         // Configuration
         const maxCodes = 200;
         let availableCodes = maxCodes;
@@ -423,9 +368,6 @@
         const alertEl = document.getElementById("alert");
         const codesLeftEl = document.getElementById("codesLeft");
         const expirationEl = document.getElementById("expirationDate");
-        const codeReveal = document.getElementById("codeReveal");
-        const revealedCode = document.getElementById("revealedCode");
-        const closeBtn = document.getElementById("closeBtn");
         
         // Update codes left display
         codesLeftEl.textContent = `الأكواد المتبقية: ${availableCodes}`;
@@ -514,10 +456,6 @@
         
         // Copy button click handler
         copyBtn.addEventListener('click', function() {
-            // Show code in reveal modal
-            revealedCode.textContent = currentCode;
-            codeReveal.classList.add('show');
-            
             // Copy to clipboard
             navigator.clipboard.writeText(currentCode).then(() => {
                 // Change button style temporarily
@@ -529,11 +467,6 @@
                     copyBtn.classList.remove('copied');
                 }, 2000);
             });
-        });
-        
-        // Close modal button
-        closeBtn.addEventListener('click', function() {
-            codeReveal.classList.remove('show');
         });
         
         // Helper functions
@@ -559,8 +492,10 @@
             }, 5000);
         }
         
-        // Initialize with cooldown check
+        // Initialize
         window.addEventListener('load', function() {
+            createGoldDots();
+            
             const lastGenerated = localStorage.getItem("lastGeneratedTime");
             const now = new Date().getTime();
             
@@ -577,6 +512,5 @@
             }
         });
     </script>
-
 </body>
 </html>
